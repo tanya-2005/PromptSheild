@@ -1,0 +1,220 @@
+{
+  "dataset": "neuralchemy/Prompt-injection-dataset",
+  "configuration": "core",
+  "revision": "7d70432dfcf47a821612cbf9d34e9d9e3ad20e75",
+  "source_url": "https://huggingface.co/datasets/neuralchemy/Prompt-injection-dataset",
+  "license_declared_by_dataset_card": "Apache-2.0",
+  "files": {
+    "train": {
+      "path": "data/raw/train.parquet",
+      "bytes": 387456,
+      "sha256": "c0724f8e00eebb65c001be9ba94291d1608e5da0374012e53dfd4077c5f92558"
+    },
+    "validation": {
+      "path": "data/raw/validation.parquet",
+      "bytes": 92943,
+      "sha256": "bbd417bfd0df1553dd769e814a0b62ca58ad5b1d08d153c90f66937a4af74deb"
+    },
+    "test": {
+      "path": "data/raw/test.parquet",
+      "bytes": 94145,
+      "sha256": "fb5432035fdd8453d61f6593bfe78ee2970403c5ea59959b642a6708e2bef670"
+    }
+  },
+  "inspection": {
+    "splits": {
+      "train": {
+        "rows": 4391,
+        "columns": [
+          "text",
+          "label",
+          "category",
+          "source",
+          "severity",
+          "group_id",
+          "augmented",
+          "tags"
+        ],
+        "label_counts": {
+          "0": 1741,
+          "1": 2650
+        },
+        "exact_duplicate_rows": 0,
+        "missing_group_ids": 0,
+        "unique_group_ids": 4391,
+        "augmented_rows": 0,
+        "source_counts": {
+          "original": 99,
+          "wildguard_judgecomp": 211,
+          "harmbench": 70,
+          "harmbench_benign": 60,
+          "hackaprompt": 1383,
+          "neuralchemy_v1": 2568
+        },
+        "category_counts": {
+          "benign": 1699,
+          "crescendo": 9,
+          "direct_injection": 1397,
+          "encoding_obfuscation": 6,
+          "indirect_injection": 8,
+          "jailbreak": 291,
+          "many_shot": 5,
+          "persona_replacement": 25,
+          "system_extraction": 10,
+          "token_smuggling": 27,
+          "edge_case": 42,
+          "adversarial": 383,
+          "prompt_injection": 16,
+          "encoding": 177,
+          "response_manipulation": 13,
+          "system_manipulation": 29,
+          "training_extraction": 68,
+          "context_confusion": 16,
+          "instruction_override": 21,
+          "control": 17,
+          "multi_turn": 12,
+          "rag_poisoning": 26,
+          "agent_manipulation": 25,
+          "payload_injection": 10,
+          "model_fingerprinting": 16,
+          "prompt_extraction": 14,
+          "output_manipulation": 16,
+          "prompt_leak": 3,
+          "code_execution": 4,
+          "chain_of_thought": 2,
+          "token_injection": 4
+        }
+      },
+      "validation": {
+        "rows": 941,
+        "columns": [
+          "text",
+          "label",
+          "category",
+          "source",
+          "severity",
+          "group_id",
+          "augmented",
+          "tags"
+        ],
+        "label_counts": {
+          "0": 407,
+          "1": 534
+        },
+        "exact_duplicate_rows": 0,
+        "missing_group_ids": 0,
+        "unique_group_ids": 941,
+        "augmented_rows": 0,
+        "source_counts": {
+          "original": 14,
+          "wildguard_judgecomp": 46,
+          "harmbench": 14,
+          "harmbench_benign": 18,
+          "hackaprompt": 291,
+          "neuralchemy_v1": 558
+        },
+        "category_counts": {
+          "benign": 396,
+          "direct_injection": 293,
+          "encoding_obfuscation": 3,
+          "system_extraction": 3,
+          "token_smuggling": 5,
+          "jailbreak": 48,
+          "adversarial": 85,
+          "edge_case": 11,
+          "encoding": 40,
+          "context_confusion": 4,
+          "training_extraction": 13,
+          "rag_poisoning": 6,
+          "payload_injection": 4,
+          "agent_manipulation": 3,
+          "response_manipulation": 2,
+          "model_fingerprinting": 2,
+          "prompt_extraction": 2,
+          "system_manipulation": 2,
+          "multi_turn": 9,
+          "prompt_injection": 1,
+          "control": 5,
+          "persona_replacement": 1,
+          "code_execution": 1,
+          "instruction_override": 2
+        }
+      },
+      "test": {
+        "rows": 942,
+        "columns": [
+          "text",
+          "label",
+          "category",
+          "source",
+          "severity",
+          "group_id",
+          "augmented",
+          "tags"
+        ],
+        "label_counts": {
+          "0": 390,
+          "1": 552
+        },
+        "exact_duplicate_rows": 0,
+        "missing_group_ids": 0,
+        "unique_group_ids": 942,
+        "augmented_rows": 0,
+        "source_counts": {
+          "original": 19,
+          "wildguard_judgecomp": 43,
+          "harmbench": 16,
+          "harmbench_benign": 22,
+          "hackaprompt": 310,
+          "neuralchemy_v1": 532
+        },
+        "category_counts": {
+          "benign": 381,
+          "direct_injection": 314,
+          "encoding_obfuscation": 1,
+          "indirect_injection": 1,
+          "jailbreak": 50,
+          "many_shot": 1,
+          "persona_replacement": 3,
+          "system_extraction": 2,
+          "adversarial": 79,
+          "prompt_injection": 4,
+          "response_manipulation": 4,
+          "edge_case": 9,
+          "token_smuggling": 7,
+          "context_confusion": 6,
+          "control": 5,
+          "encoding": 30,
+          "training_extraction": 10,
+          "agent_manipulation": 8,
+          "payload_injection": 2,
+          "system_manipulation": 4,
+          "prompt_extraction": 3,
+          "multi_turn": 4,
+          "rag_poisoning": 4,
+          "instruction_override": 4,
+          "output_manipulation": 5,
+          "token_injection": 1
+        }
+      }
+    },
+    "cross_split_exact_text_overlap": {
+      "train:validation": 0,
+      "train:test": 0,
+      "validation:test": 0
+    },
+    "cross_split_group_overlap": {
+      "train:validation": 0,
+      "train:test": 0,
+      "validation:test": 0
+    },
+    "near_duplicate_candidate_pairs": 48,
+    "near_duplicate_cross_split_pairs": 23,
+    "near_duplicate_method": "whitespace/lowercase normalization, same first-50-character bucket, SequenceMatcher ratio >= 0.95; candidates require manual review"
+  },
+  "notes": [
+    "Raw Parquet files are local-only and ignored by Git.",
+    "Dataset-card counts and leakage claims were independently checked against the downloaded files.",
+    "Near-duplicate counts are conservative review candidates, not confirmed leakage."
+  ]
+}

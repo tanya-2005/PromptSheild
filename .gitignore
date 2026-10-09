@@ -1,0 +1,43 @@
+﻿# Raw dataset files are downloaded locally and must not be committed.
+data/raw/
+.hf-dataset-*.json
+
+# Local Python environment and secrets.
+.venv/
+.env
+.env.local
+.env.*.local
+
+# Python caches, test coverage, and tool caches.
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Build and distribution artifacts.
+build/
+dist/
+*.egg-info/
+
+# Local logs and temporary files.
+*.log
+*.tmp
+*.bak
+
+# Model artifacts.
+models/
+*.joblib
+*.pkl
+
+# Generated validation reports.
+reports/*-validation.json
+reports/validation-error-analysis.json
+
+# Editor and operating-system metadata.
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
