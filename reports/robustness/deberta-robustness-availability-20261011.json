@@ -1,0 +1,50 @@
+{
+  "experiment": "validation_adversarial_robustness_deberta_availability",
+  "evaluated": false,
+  "reason": "The selected local environment cannot import the required DeBERTa runtime dependencies.",
+  "environment": {
+    "python_executable": "C:/Users/tanya/Documents/PromptSheild/.venv/Scripts/python.exe",
+    "python_version": "3.14.2",
+    "required_packages": {
+      "torch": "2.6.0",
+      "transformers": "4.49.0",
+      "sentencepiece": "0.2.0"
+    },
+    "missing_packages": [
+      "torch",
+      "transformers",
+      "sentencepiece"
+    ],
+    "installation_performed": false
+  },
+  "checkpoint": {
+    "directory": "models/deberta-v3-small",
+    "model_id": "microsoft/deberta-v3-small",
+    "model_revision": "a36c739020e01763fe789b4b85e2df55d6180012",
+    "architecture": "DebertaV2ForSequenceClassification",
+    "num_labels": 2,
+    "required_local_files_present": [
+      "config.json",
+      "model.safetensors",
+      "spm.model",
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "special_tokens_map.json",
+      "added_tokens.json"
+    ],
+    "config_transformers_version": "4.49.0"
+  },
+  "evaluation_contract": {
+    "validation_only": true,
+    "validation_rows_expected": 941,
+    "transformations": [
+      "whitespace_variation",
+      "harmless_formatting",
+      "neutral_context"
+    ],
+    "threshold": 0.9,
+    "test_split_accessed": false,
+    "prompt_text_recorded": false
+  },
+  "next_action": "Run the existing robustness CLI in a compatible isolated environment containing the pinned runtime packages and the saved checkpoint, then save a new DeBERTa-only robustness report without overwriting historical reports."
+}

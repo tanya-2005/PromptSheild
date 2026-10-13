@@ -1,9 +1,12 @@
 ﻿# Raw dataset files are downloaded locally and must not be committed.
 data/raw/
 .hf-dataset-*.json
+.cache/huggingface/
+transformer-checkpoints/
 
 # Local Python environment and secrets.
 .venv/
+.venv-deberta/
 .env
 .env.local
 .env.*.local
@@ -26,6 +29,7 @@ dist/
 *.log
 *.tmp
 *.bak
+*.zip
 
 # Model artifacts.
 models/
@@ -41,3 +45,5 @@ reports/validation-error-analysis.json
 .idea/
 .DS_Store
 Thumbs.db
+reports/manual-validation-review.md
+reports/near-duplicate-review.md

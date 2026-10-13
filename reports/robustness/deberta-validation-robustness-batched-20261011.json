@@ -1,0 +1,28 @@
+{
+  "experiment": "validation_adversarial_robustness_deberta",
+  "evaluation_status": "interrupted_cpu_runtime",
+  "checkpoint_loaded": true,
+  "smoke_test_passed": true,
+  "batch_size": 8,
+  "device": "cpu",
+  "validation_only": true,
+  "validation_path": "data/raw/validation.parquet",
+  "expected_validation_rows": 941,
+  "validation_rows_evaluated": null,
+  "metrics": null,
+  "inference_complete": false,
+  "test_split_accessed": false,
+  "reports_overwritten": false,
+  "runtime": {
+    "python_version": "3.13.16",
+    "torch": "2.6.0+cpu",
+    "transformers": "4.49.0",
+    "sentencepiece": "0.2.1",
+    "checkpoint": "models/deberta-v3-small",
+    "architecture": "DebertaV2ForSequenceClassification",
+    "num_labels": 2,
+    "max_sequence_length": 128
+  },
+  "reason": "The validation-only benchmark was stopped after more than four minutes without completing on the CPU runtime. No completed metrics were written.",
+  "next_action": "Run the unchanged benchmark command in the established compatible GPU environment, retaining --deberta-batch-size 8 or another explicitly recorded conservative value."
+}

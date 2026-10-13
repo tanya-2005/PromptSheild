@@ -1,0 +1,464 @@
+{
+  "experiment": "validation_adversarial_robustness",
+  "timestamp_utc": "2026-10-10T20:15:07.499476+00:00",
+  "validation_only": true,
+  "validation_path": "C:/Users/tanya/Documents/PromptSheild/data/raw/validation.parquet",
+  "rows": 941,
+  "seed": 42,
+  "threshold": 0.9,
+  "transformations": {
+    "whitespace_variation": {
+      "description": "Replace line endings with spaces around line breaks.",
+      "evaluation_category": "candidate_label_preserving",
+      "label_preserving_claim": true,
+      "limitation": "Line-break-sensitive syntax or formatting could change meaning."
+    },
+    "harmless_formatting": {
+      "description": "Wrap the text in plain delimiter lines.",
+      "evaluation_category": "candidate_label_preserving",
+      "label_preserving_claim": true,
+      "limitation": "Inputs whose meaning depends on surrounding delimiters may differ."
+    },
+    "neutral_context": {
+      "description": "Prepend a neutral classification-context note.",
+      "evaluation_category": "exploratory",
+      "label_preserving_claim": false,
+      "limitation": "Added context can change interpretation, so the original label is used only as an exploratory reference."
+    }
+  },
+  "models": {
+    "logistic_regression": {
+      "available": true,
+      "original_validation": {
+        "accuracy": 0.9415515409139213,
+        "per_class": {
+          "0": {
+            "precision": 0.9756756756756757,
+            "recall": 0.8869778869778869,
+            "f1": 0.9292149292149292,
+            "support": 407
+          },
+          "1": {
+            "precision": 0.9194395796847635,
+            "recall": 0.9831460674157303,
+            "f1": 0.9502262443438914,
+            "support": 534
+          }
+        },
+        "macro_f1": 0.9397205867794103,
+        "confusion_matrix": [
+          [
+            361,
+            46
+          ],
+          [
+            9,
+            525
+          ]
+        ],
+        "support": {
+          "0": 407,
+          "1": 534
+        },
+        "false_positive_rate_benign": 0.11302211302211303,
+        "false_negative_rate_malicious": 0.016853932584269662
+      },
+      "transformations": {
+        "whitespace_variation": {
+          "examples_evaluated": 941,
+          "metrics": {
+            "accuracy": 0.9415515409139213,
+            "per_class": {
+              "0": {
+                "precision": 0.9756756756756757,
+                "recall": 0.8869778869778869,
+                "f1": 0.9292149292149292,
+                "support": 407
+              },
+              "1": {
+                "precision": 0.9194395796847635,
+                "recall": 0.9831460674157303,
+                "f1": 0.9502262443438914,
+                "support": 534
+              }
+            },
+            "macro_f1": 0.9397205867794103,
+            "confusion_matrix": [
+              [
+                361,
+                46
+              ],
+              [
+                9,
+                525
+              ]
+            ],
+            "support": {
+              "0": 407,
+              "1": 534
+            },
+            "false_positive_rate_benign": 0.11302211302211303,
+            "false_negative_rate_malicious": 0.016853932584269662,
+            "prediction_flip_rate": 0.0,
+            "by_original_class": {
+              "0": {
+                "examples": 407,
+                "classification_accuracy": 0.8869778869778869,
+                "prediction_flip_rate": 0.0
+              },
+              "1": {
+                "examples": 534,
+                "classification_accuracy": 0.9831460674157303,
+                "prediction_flip_rate": 0.0
+              }
+            }
+          },
+          "identifier_count": 941,
+          "labels_copied": true,
+          "label_preservation": {
+            "category": "candidate_label_preserving",
+            "claimed": true,
+            "limitation": "Line-break-sensitive syntax or formatting could change meaning."
+          }
+        },
+        "harmless_formatting": {
+          "examples_evaluated": 941,
+          "metrics": {
+            "accuracy": 0.9415515409139213,
+            "per_class": {
+              "0": {
+                "precision": 0.9756756756756757,
+                "recall": 0.8869778869778869,
+                "f1": 0.9292149292149292,
+                "support": 407
+              },
+              "1": {
+                "precision": 0.9194395796847635,
+                "recall": 0.9831460674157303,
+                "f1": 0.9502262443438914,
+                "support": 534
+              }
+            },
+            "macro_f1": 0.9397205867794103,
+            "confusion_matrix": [
+              [
+                361,
+                46
+              ],
+              [
+                9,
+                525
+              ]
+            ],
+            "support": {
+              "0": 407,
+              "1": 534
+            },
+            "false_positive_rate_benign": 0.11302211302211303,
+            "false_negative_rate_malicious": 0.016853932584269662,
+            "prediction_flip_rate": 0.0,
+            "by_original_class": {
+              "0": {
+                "examples": 407,
+                "classification_accuracy": 0.8869778869778869,
+                "prediction_flip_rate": 0.0
+              },
+              "1": {
+                "examples": 534,
+                "classification_accuracy": 0.9831460674157303,
+                "prediction_flip_rate": 0.0
+              }
+            }
+          },
+          "identifier_count": 941,
+          "labels_copied": true,
+          "label_preservation": {
+            "category": "candidate_label_preserving",
+            "claimed": true,
+            "limitation": "Inputs whose meaning depends on surrounding delimiters may differ."
+          }
+        },
+        "neutral_context": {
+          "examples_evaluated": 941,
+          "metrics": {
+            "accuracy": 0.871413390010627,
+            "per_class": {
+              "0": {
+                "precision": 0.9965277777777778,
+                "recall": 0.7051597051597052,
+                "f1": 0.8258992805755395,
+                "support": 407
+              },
+              "1": {
+                "precision": 0.8162327718223583,
+                "recall": 0.99812734082397,
+                "f1": 0.8980623420387531,
+                "support": 534
+              }
+            },
+            "macro_f1": 0.8619808113071463,
+            "confusion_matrix": [
+              [
+                287,
+                120
+              ],
+              [
+                1,
+                533
+              ]
+            ],
+            "support": {
+              "0": 407,
+              "1": 534
+            },
+            "false_positive_rate_benign": 0.29484029484029484,
+            "false_negative_rate_malicious": 0.0018726591760299626,
+            "prediction_flip_rate": 0.0871413390010627,
+            "by_original_class": {
+              "0": {
+                "examples": 407,
+                "classification_accuracy": 0.7051597051597052,
+                "prediction_flip_rate": 0.18181818181818182
+              },
+              "1": {
+                "examples": 534,
+                "classification_accuracy": 0.99812734082397,
+                "prediction_flip_rate": 0.0149812734082397
+              }
+            }
+          },
+          "identifier_count": 941,
+          "labels_copied": true,
+          "label_preservation": {
+            "category": "exploratory",
+            "claimed": false,
+            "limitation": "Added context can change interpretation, so the original label is used only as an exploratory reference."
+          }
+        }
+      }
+    },
+    "linear_svm": {
+      "available": true,
+      "original_validation": {
+        "accuracy": 0.9564293304994687,
+        "per_class": {
+          "0": {
+            "precision": 0.9716494845360825,
+            "recall": 0.9262899262899262,
+            "f1": 0.9484276729559749,
+            "support": 407
+          },
+          "1": {
+            "precision": 0.945750452079566,
+            "recall": 0.9794007490636704,
+            "f1": 0.9622815087396505,
+            "support": 534
+          }
+        },
+        "macro_f1": 0.9553545908478127,
+        "confusion_matrix": [
+          [
+            377,
+            30
+          ],
+          [
+            11,
+            523
+          ]
+        ],
+        "support": {
+          "0": 407,
+          "1": 534
+        },
+        "false_positive_rate_benign": 0.07371007371007371,
+        "false_negative_rate_malicious": 0.020599250936329586
+      },
+      "transformations": {
+        "whitespace_variation": {
+          "examples_evaluated": 941,
+          "metrics": {
+            "accuracy": 0.9564293304994687,
+            "per_class": {
+              "0": {
+                "precision": 0.9716494845360825,
+                "recall": 0.9262899262899262,
+                "f1": 0.9484276729559749,
+                "support": 407
+              },
+              "1": {
+                "precision": 0.945750452079566,
+                "recall": 0.9794007490636704,
+                "f1": 0.9622815087396505,
+                "support": 534
+              }
+            },
+            "macro_f1": 0.9553545908478127,
+            "confusion_matrix": [
+              [
+                377,
+                30
+              ],
+              [
+                11,
+                523
+              ]
+            ],
+            "support": {
+              "0": 407,
+              "1": 534
+            },
+            "false_positive_rate_benign": 0.07371007371007371,
+            "false_negative_rate_malicious": 0.020599250936329586,
+            "prediction_flip_rate": 0.0,
+            "by_original_class": {
+              "0": {
+                "examples": 407,
+                "classification_accuracy": 0.9262899262899262,
+                "prediction_flip_rate": 0.0
+              },
+              "1": {
+                "examples": 534,
+                "classification_accuracy": 0.9794007490636704,
+                "prediction_flip_rate": 0.0
+              }
+            }
+          },
+          "identifier_count": 941,
+          "labels_copied": true,
+          "label_preservation": {
+            "category": "candidate_label_preserving",
+            "claimed": true,
+            "limitation": "Line-break-sensitive syntax or formatting could change meaning."
+          }
+        },
+        "harmless_formatting": {
+          "examples_evaluated": 941,
+          "metrics": {
+            "accuracy": 0.9564293304994687,
+            "per_class": {
+              "0": {
+                "precision": 0.9716494845360825,
+                "recall": 0.9262899262899262,
+                "f1": 0.9484276729559749,
+                "support": 407
+              },
+              "1": {
+                "precision": 0.945750452079566,
+                "recall": 0.9794007490636704,
+                "f1": 0.9622815087396505,
+                "support": 534
+              }
+            },
+            "macro_f1": 0.9553545908478127,
+            "confusion_matrix": [
+              [
+                377,
+                30
+              ],
+              [
+                11,
+                523
+              ]
+            ],
+            "support": {
+              "0": 407,
+              "1": 534
+            },
+            "false_positive_rate_benign": 0.07371007371007371,
+            "false_negative_rate_malicious": 0.020599250936329586,
+            "prediction_flip_rate": 0.0,
+            "by_original_class": {
+              "0": {
+                "examples": 407,
+                "classification_accuracy": 0.9262899262899262,
+                "prediction_flip_rate": 0.0
+              },
+              "1": {
+                "examples": 534,
+                "classification_accuracy": 0.9794007490636704,
+                "prediction_flip_rate": 0.0
+              }
+            }
+          },
+          "identifier_count": 941,
+          "labels_copied": true,
+          "label_preservation": {
+            "category": "candidate_label_preserving",
+            "claimed": true,
+            "limitation": "Inputs whose meaning depends on surrounding delimiters may differ."
+          }
+        },
+        "neutral_context": {
+          "examples_evaluated": 941,
+          "metrics": {
+            "accuracy": 0.8501594048884166,
+            "per_class": {
+              "0": {
+                "precision": 0.996268656716418,
+                "recall": 0.6560196560196561,
+                "f1": 0.7911111111111111,
+                "support": 407
+              },
+              "1": {
+                "precision": 0.7919762258543833,
+                "recall": 0.99812734082397,
+                "f1": 0.8831814415907208,
+                "support": 534
+              }
+            },
+            "macro_f1": 0.8371462763509159,
+            "confusion_matrix": [
+              [
+                267,
+                140
+              ],
+              [
+                1,
+                533
+              ]
+            ],
+            "support": {
+              "0": 407,
+              "1": 534
+            },
+            "false_positive_rate_benign": 0.343980343980344,
+            "false_negative_rate_malicious": 0.0018726591760299626,
+            "prediction_flip_rate": 0.1275239107332625,
+            "by_original_class": {
+              "0": {
+                "examples": 407,
+                "classification_accuracy": 0.6560196560196561,
+                "prediction_flip_rate": 0.2702702702702703
+              },
+              "1": {
+                "examples": 534,
+                "classification_accuracy": 0.99812734082397,
+                "prediction_flip_rate": 0.018726591760299626
+              }
+            }
+          },
+          "identifier_count": 941,
+          "labels_copied": true,
+          "label_preservation": {
+            "category": "exploratory",
+            "claimed": false,
+            "limitation": "Added context can change interpretation, so the original label is used only as an exploratory reference."
+          }
+        }
+      }
+    },
+    "deberta": {
+      "available": false,
+      "reason": "No module named 'torch'"
+    }
+  },
+  "limitations": [
+    "All results use the validation split and are not independent test results.",
+    "Transformations are controlled perturbations, not a complete adversarial threat model.",
+    "Neutral-context results are exploratory because the added context may alter meaning.",
+    "Candidate label-preserving transformations still have documented edge cases.",
+    "Prediction flips indicate sensitivity, not necessarily a label error.",
+    "No transformed copies were used for training.",
+    "Prompt text is intentionally excluded from this report."
+  ]
+}
