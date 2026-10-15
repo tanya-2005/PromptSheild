@@ -261,3 +261,6 @@ archive containing only the checkpoint, validation parquet, classical artifacts
 required by the existing CLI, and the benchmark source files. The notebook
 runs a synthetic batched smoke test before invoking the same CLI with a GPU
 device and writes new reports under `/content/promptshield_outputs/`.
+
+For a local validation-only run, follow the exact command and completion
+checks in [docs/deberta-robustness-runbook.md](docs/deberta-robustness-runbook.md).

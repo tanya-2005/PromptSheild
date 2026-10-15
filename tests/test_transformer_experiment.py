@@ -1,6 +1,7 @@
 import unittest
 
 from promptshield.transformer_experiment import (
+    LABEL_MAPPING,
     MODEL_ID,
     TransformerConfig,
     require_transformer_dependencies,
@@ -19,6 +20,9 @@ class TransformerExperimentTests(unittest.TestCase):
     def test_model_revision_is_required(self):
         with self.assertRaisesRegex(ValueError, "model_revision"):
             validate_config(TransformerConfig())
+
+    def test_label_mapping_is_explicit_and_binary(self):
+        self.assertEqual(LABEL_MAPPING, {0: "benign", 1: "malicious"})
 
     def test_invalid_resource_settings_are_rejected(self):
         with self.assertRaises(ValueError):

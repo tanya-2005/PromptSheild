@@ -21,6 +21,7 @@ MODEL_ID = "microsoft/deberta-v3-small"
 FEATURE_COLUMN = "text"
 TARGET_COLUMN = "label"
 SEED = 42
+LABEL_MAPPING = {0: "benign", 1: "malicious"}
 
 
 @dataclass(frozen=True)
@@ -152,6 +153,10 @@ def train_and_validate(
         revision=config.model_revision,
         num_labels=2,
     )
+    model.config.id2label = dict(LABEL_MAPPING)
+    model.config.label2id = {
+        label: index for index, label in LABEL_MAPPING.items()
+    }
     model.to(device)
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -184,6 +189,8 @@ def train_and_validate(
         "experiment": "deberta_v3_small_local_cpu",
         "feature_column": FEATURE_COLUMN,
         "target_column": TARGET_COLUMN,
+        "label_mapping": LABEL_MAPPING,
+        "decision_convention": "argmax(logits)",
         "excluded_feature_columns": [
             "category", "source", "severity", "group_id", "augmented", "tags"
         ],

@@ -22,6 +22,7 @@ from promptshield.inference import (
 SEED = 42
 THRESHOLD = 0.90
 DEFAULT_DEBERTA_BATCH_SIZE = 8
+VALID_LABELS = frozenset({0, 1})
 TRANSFORMATIONS = (
     "whitespace_variation",
     "harmless_formatting",
@@ -166,6 +167,28 @@ def calculate_robustness_metrics(
     return metrics
 
 
+def validate_predictions(
+    predictions: list[int],
+    expected_count: int,
+    context: str,
+) -> list[int]:
+    """Validate adapter output before it reaches the metric functions."""
+    if len(predictions) != expected_count:
+        raise ValueError(
+            f"{context} returned {len(predictions)} predictions; "
+            f"expected {expected_count}"
+        )
+    if any(
+        not isinstance(prediction, int) or prediction not in VALID_LABELS
+        for prediction in predictions
+    ):
+        raise ValueError(
+            f"{context} returned predictions outside the binary label set "
+            "{0, 1}"
+        )
+    return predictions
+
+
 class ModelAdapter:
     def predict(self, texts: list[str]) -> list[int]:
         raise NotImplementedError
@@ -254,32 +277,67 @@ def run_benchmark(
     )
     results: dict[str, Any] = {}
     for name, adapter in adapters.items():
-        original_predictions = adapter.predict_batch(texts, deberta_batch_size)
+        errors: list[str] = []
+        try:
+            original_predictions = validate_predictions(
+                adapter.predict_batch(texts, deberta_batch_size),
+                len(texts),
+                f"{name} clean validation",
+            )
+        except (TypeError, ValueError) as error:
+            original_predictions = []
+            errors.append(str(error))
+        clean_complete = not errors
         model_result = {
             "available": True,
-            "evaluation_status": "completed",
-            "metadata": adapter.metadata(),
+            "evaluation_status": "incomplete",
+            "metadata": {
+                **adapter.metadata(),
+                "model_path": model_paths[name].as_posix(),
+            },
             "completed_rows": {
                 "clean_validation": len(original_predictions),
-                **{
-                    transformation: len(
-                        transform_examples(examples, transformation)
-                    )
-                    for transformation in TRANSFORMATIONS
-                },
             },
-            "original_validation": calculate_metrics(labels, original_predictions),
+            "original_validation": (
+                calculate_metrics(labels, original_predictions)
+                if clean_complete
+                else None
+            ),
             "transformations": {},
         }
+        transformations_complete = True
         for transformation in TRANSFORMATIONS:
             transformed = transform_examples(examples, transformation)
-            predictions = adapter.predict_batch(
-                [item.text for item in transformed], deberta_batch_size
+            try:
+                predictions = validate_predictions(
+                    adapter.predict_batch(
+                        [item.text for item in transformed],
+                        deberta_batch_size,
+                    ),
+                    len(texts),
+                    f"{name} {transformation}",
+                )
+            except (TypeError, ValueError) as error:
+                predictions = []
+                errors.append(str(error))
+            transformation_complete = not errors or (
+                len(predictions) == len(texts)
+                and not any(
+                    transformation in message for message in errors
+                )
             )
+            transformations_complete = (
+                transformations_complete and transformation_complete
+            )
+            model_result["completed_rows"][transformation] = len(predictions)
             model_result["transformations"][transformation] = {
                 "examples_evaluated": len(predictions),
-                "metrics": calculate_robustness_metrics(
-                    labels, predictions, original_predictions
+                "metrics": (
+                    calculate_robustness_metrics(
+                        labels, predictions, original_predictions
+                    )
+                    if clean_complete and transformation_complete
+                    else None
                 ),
                 "identifier_count": len(
                     {item.example_id for item in transformed}
@@ -300,15 +358,37 @@ def run_benchmark(
                     ],
                 },
             }
+        if errors:
+            model_result["errors"] = errors
+        model_result["evaluation_status"] = (
+            "completed"
+            if clean_complete and transformations_complete and not errors
+            else "incomplete"
+        )
         results[name] = model_result
     for name, reason in unavailable.items():
         results[name] = {"available": False, "reason": reason}
+    inference_complete = (
+        len(results) == len(model_paths)
+        and all(
+            result.get("available")
+            and result.get("evaluation_status") == "completed"
+            and all(
+                count == len(texts)
+                for count in result.get("completed_rows", {}).values()
+            )
+            for result in results.values()
+        )
+    )
     return {
         "experiment": "validation_adversarial_robustness",
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "validation_only": True,
         "validation_path": validation_path.as_posix(),
         "rows": len(texts),
+        "model_paths": {
+            name: path.as_posix() for name, path in model_paths.items()
+        },
         "seed": SEED,
         "threshold": THRESHOLD,
         "decision_convention": (
@@ -316,16 +396,10 @@ def run_benchmark(
             "training report uses argmax(logits)."
         ),
         "deberta_batch_size": deberta_batch_size,
-        "evaluation_status": "completed",
-        "inference_complete": all(
-            result.get("evaluation_status") == "completed"
-            and all(
-                count == len(texts)
-                for count in result.get("completed_rows", {}).values()
-            )
-            for result in results.values()
-            if result.get("available")
+        "evaluation_status": (
+            "completed" if inference_complete else "incomplete"
         ),
+        "inference_complete": inference_complete,
         "transformations": TRANSFORMATION_METADATA,
         "models": results,
         "limitations": [
@@ -351,6 +425,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         f"- Validation rows: `{report['rows']}`",
         f"- Seed: `{report['seed']}`",
         f"- Threshold: `{report['threshold']}`",
+        f"- Evaluation status: `{report['evaluation_status']}`",
         "",
         "## Results",
         "",
@@ -364,6 +439,12 @@ def render_markdown(report: dict[str, Any]) -> str:
             )
             continue
         clean = result["original_validation"]
+        if clean is None:
+            lines.append(
+                f"| {name} | incomplete | clean validation | reference | "
+                f"{result['completed_rows']['clean_validation']} | — | — | — | — | — |"
+            )
+            continue
         lines.append(
             f"| {name} | available | clean validation | reference | "
             f"{report['rows']} | {clean['accuracy']:.4f} | "
@@ -373,6 +454,13 @@ def render_markdown(report: dict[str, Any]) -> str:
         )
         for transformation, data in result["transformations"].items():
             metrics = data["metrics"]
+            if metrics is None:
+                lines.append(
+                    f"| {name} | incomplete | {transformation} | "
+                    f"{data['label_preservation']['category']} | "
+                    f"{data['examples_evaluated']} | — | — | — | — | — |"
+                )
+                continue
             lines.append(
                 f"| {name} | available | {transformation} | "
                 f"{data['label_preservation']['category']} | "
@@ -385,7 +473,8 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
-            "Clean rows and every transformed row count are 941 in this run.",
+            "Expected clean and transformed row counts are "
+            f"{report['rows']} in this run.",
             "Clean metrics use the model's ordinary prediction convention. "
             "Transformed metrics use the copied validation labels; flip rate "
             "compares predictions by stable row order and identifier.",

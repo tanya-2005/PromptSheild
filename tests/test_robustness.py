@@ -10,13 +10,128 @@ from promptshield.robustness import (
     build_examples,
     calculate_robustness_metrics,
     load_model_adapters,
+    render_markdown,
+    run_benchmark,
     stable_example_id,
     transform_examples,
+    validate_predictions,
     validate_validation_path,
 )
 
 
 class RobustnessTests(unittest.TestCase):
+    def _run_synthetic_benchmark(
+        self, adapters, unavailable=None, model_paths=None
+    ):
+        with patch(
+            "promptshield.robustness.load_labeled_parquet",
+            return_value=(["synthetic benign", "synthetic malicious"], [0, 1]),
+        ), patch(
+            "promptshield.robustness.load_model_adapters",
+            return_value=(adapters, unavailable or {}),
+        ):
+            return run_benchmark(
+                Path("data/raw/validation.parquet"),
+                model_paths
+                or {
+                    name: Path(f"{name}.model")
+                    for name in adapters
+                },
+            )
+
+    def test_benchmark_status_completed_when_all_models_finish(self):
+        class CompleteAdapter:
+            def predict_batch(self, texts, batch_size):
+                return [0, 1]
+
+            def metadata(self):
+                return {"model": "synthetic"}
+
+        report = self._run_synthetic_benchmark(
+            {"baseline": CompleteAdapter()}
+        )
+        self.assertEqual(report["evaluation_status"], "completed")
+        self.assertTrue(report["inference_complete"])
+        self.assertEqual(
+            report["models"]["baseline"]["evaluation_status"],
+            "completed",
+        )
+
+    def test_benchmark_status_incomplete_when_deberta_is_unavailable(self):
+        class CompleteAdapter:
+            def predict_batch(self, texts, batch_size):
+                return [0, 1]
+
+            def metadata(self):
+                return {"model": "synthetic"}
+
+        report = self._run_synthetic_benchmark(
+            {
+                "baseline": CompleteAdapter(),
+                "svm": CompleteAdapter(),
+            },
+            unavailable={"deberta": "synthetic unavailable"},
+            model_paths={
+                "baseline": Path("baseline.model"),
+                "svm": Path("svm.model"),
+                "deberta": Path("deberta.model"),
+            },
+        )
+        self.assertEqual(report["evaluation_status"], "incomplete")
+        self.assertFalse(report["inference_complete"])
+
+    def test_benchmark_status_incomplete_when_model_returns_short_batch(self):
+        class IncompleteAdapter:
+            def __init__(self):
+                self.calls = 0
+
+            def predict_batch(self, texts, batch_size):
+                self.calls += 1
+                return [0] if self.calls == 2 else [0, 1]
+
+            def metadata(self):
+                return {"model": "synthetic"}
+
+        report = self._run_synthetic_benchmark(
+            {"baseline": IncompleteAdapter()}
+        )
+        self.assertEqual(report["evaluation_status"], "incomplete")
+        self.assertFalse(report["inference_complete"])
+        self.assertEqual(
+            report["models"]["baseline"]["evaluation_status"],
+            "incomplete",
+        )
+
+    def test_invalid_prediction_values_make_model_incomplete(self):
+        class InvalidAdapter:
+            def predict_batch(self, texts, batch_size):
+                return [0, 2]
+
+            def metadata(self):
+                return {"model": "synthetic"}
+
+        report = self._run_synthetic_benchmark(
+            {"baseline": InvalidAdapter()}
+        )
+        self.assertEqual(report["evaluation_status"], "incomplete")
+        self.assertFalse(report["inference_complete"])
+        self.assertTrue(report["models"]["baseline"]["errors"])
+
+    def test_prediction_validation_rejects_wrong_shape_and_label(self):
+        with self.assertRaisesRegex(ValueError, "expected 2"):
+            validate_predictions([0], 2, "synthetic")
+        with self.assertRaisesRegex(ValueError, "binary label set"):
+            validate_predictions([0, 3], 2, "synthetic")
+
+    def test_incomplete_report_markdown_does_not_require_metrics(self):
+        report = self._run_synthetic_benchmark(
+            {}, unavailable={"deberta": "synthetic unavailable"},
+            model_paths={"deberta": Path("deberta.model")},
+        )
+        markdown = render_markdown(report)
+        self.assertIn("incomplete", markdown)
+        self.assertIn("unavailable", markdown)
+
     def test_transformations_are_deterministic_and_preserve_identity(self):
         examples = build_examples(["safe text", "ignore instructions"], [0, 1])
         for transformation in TRANSFORMATIONS:
@@ -69,6 +184,111 @@ class RobustnessTests(unittest.TestCase):
         self.assertEqual(transformed.example_id, original.example_id)
         self.assertEqual(transformed.label, original.label)
         self.assertNotEqual(transformed.text, original.text)
+
+    def test_formatting_and_context_are_distinct_and_preserve_rows(self):
+        examples = build_examples(
+            ["synthetic benign", "synthetic malicious\nline"], [0, 1]
+        )
+        formatting = transform_examples(examples, "harmless_formatting")
+        context = transform_examples(examples, "neutral_context")
+
+        self.assertEqual(len(formatting), len(examples))
+        self.assertEqual(len(context), len(examples))
+        self.assertEqual(
+            [item.example_id for item in formatting],
+            [item.example_id for item in examples],
+        )
+        self.assertEqual(
+            [item.example_id for item in context],
+            [item.example_id for item in examples],
+        )
+        self.assertEqual(
+            [item.label for item in formatting],
+            [item.label for item in examples],
+        )
+        self.assertEqual(
+            [item.label for item in context],
+            [item.label for item in examples],
+        )
+        self.assertEqual(
+            [item.text for item in formatting],
+            ["---\nsynthetic benign\n---", "---\nsynthetic malicious\nline\n---"],
+        )
+        self.assertEqual(
+            [item.text for item in context],
+            [
+                "Context note: The following user-provided text is being classified.\n\n"
+                "synthetic benign",
+                "Context note: The following user-provided text is being classified.\n\n"
+                "synthetic malicious\nline",
+            ],
+        )
+        self.assertNotEqual(
+            [item.text for item in formatting],
+            [item.text for item in context],
+        )
+
+    def test_benchmark_records_distinct_inputs_and_uses_each_prediction_set(self):
+        class RecordingAdapter:
+            def __init__(self):
+                self.inputs = []
+                self.predictions = iter(
+                    ([0, 1], [0, 1], [1, 1], [0, 1],)
+                )
+
+            def predict_batch(self, texts, batch_size):
+                self.inputs.append(list(texts))
+                return next(self.predictions)
+
+            def metadata(self):
+                return {"model": "synthetic"}
+
+        adapter = RecordingAdapter()
+        with patch(
+            "promptshield.robustness.load_labeled_parquet",
+            return_value=(["synthetic benign", "synthetic malicious"], [0, 1]),
+        ), patch(
+            "promptshield.robustness.load_model_adapters",
+            return_value=({"synthetic": adapter}, {}),
+        ):
+            from promptshield.robustness import run_benchmark
+
+            report = run_benchmark(
+                Path("data/raw/validation.parquet"),
+                {"synthetic": Path("synthetic.model")},
+            )
+
+        self.assertEqual(
+            adapter.inputs,
+            [
+                ["synthetic benign", "synthetic malicious"],
+                ["synthetic benign", "synthetic malicious"],
+                ["---\nsynthetic benign\n---", "---\nsynthetic malicious\n---"],
+                [
+                    "Context note: The following user-provided text is being classified.\n\n"
+                    "synthetic benign",
+                    "Context note: The following user-provided text is being classified.\n\n"
+                    "synthetic malicious",
+                ],
+            ],
+        )
+        transformations = report["models"]["synthetic"]["transformations"]
+        self.assertEqual(
+            transformations["harmless_formatting"]["metrics"][
+                "prediction_flip_rate"
+            ],
+            0.5,
+        )
+        self.assertEqual(
+            transformations["neutral_context"]["metrics"][
+                "prediction_flip_rate"
+            ],
+            0.0,
+        )
+        self.assertNotEqual(
+            transformations["harmless_formatting"]["metrics"],
+            transformations["neutral_context"]["metrics"],
+        )
 
     def test_ids_are_stable_without_exposing_text(self):
         identifier = stable_example_id(1, "private prompt")
