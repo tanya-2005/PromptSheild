@@ -1,5 +1,13 @@
 # Stage 3 baseline-readiness audit
 
+> **Historical snapshot.** This report was written before this project was a
+> Git repository and before `pyarrow`/`torch` were installed locally, so
+> statements such as "the workspace is not a Git repository" and "the current
+> `.venv` contains Python 3.14 and `pip`, but not `pyarrow`" describe that
+> earlier moment only. It is kept unedited as a stage record; the current,
+> verified state is audited in
+> [reports/finalization-audit.md](finalization-audit.md) (2026-10-20).
+
 This report records verified facts, proposed modeling decisions, and unresolved
 questions. It does not contain model results.
 

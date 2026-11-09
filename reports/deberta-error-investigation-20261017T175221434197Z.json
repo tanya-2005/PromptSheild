@@ -1,0 +1,1814 @@
+{
+  "experiment": "deberta_validation_error_investigation",
+  "timestamp_utc": "2026-10-17T17:52:20.699831+00:00",
+  "evaluation_status": "completed",
+  "validation_only": true,
+  "validation_path": "data/raw/validation.parquet",
+  "validation_rows": 941,
+  "label_distribution": {
+    "0": 407,
+    "1": 534
+  },
+  "model_configuration": {
+    "model_id": "microsoft/deberta-v3-small",
+    "architecture": [
+      "DebertaV2ForSequenceClassification"
+    ],
+    "model_type": "deberta-v2",
+    "num_labels": 2,
+    "id2label": {
+      "0": "LABEL_0",
+      "1": "LABEL_1"
+    },
+    "label2id": {
+      "LABEL_0": 0,
+      "LABEL_1": 1
+    },
+    "label_mapping_expected_by_project": {
+      "0": "benign",
+      "1": "malicious"
+    },
+    "tokenizer_class": "DebertaV2TokenizerFast",
+    "tokenizer_declared_model_max_length": 1000000000000000019884624838656,
+    "effective_max_sequence_length": 128,
+    "threshold": 0.9
+  },
+  "checkpoint": {
+    "directory": "models/deberta-v3-small",
+    "files": [
+      {
+        "path": "added_tokens.json",
+        "sha256": "dc046d04c9b0ada7ae6f1dc89c465801799acdf0c9a6aab8c15a1b2d5ca4e91f"
+      },
+      {
+        "path": "config.json",
+        "sha256": "44e8fe36a9ea5659b039545691a0896e21ab5629f37b2c7f4480354433902f0d"
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "2cefb8e40ade17940899ef523c7dea2a1bd1813ba0373edda84481a32c783614"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "sha256": "9463f61e1b109a8eb4688b829260d7c6b1e6dff04c98ff7269bb89e2b92369b9"
+      },
+      {
+        "path": "spm.model",
+        "sha256": "c679fbf93643d19aab7ee10c0b99e460bdbc02fedf34b92b05af343b4af586fd"
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "37fe3823ad5737f0033c832905c8d4089ed4008da79682ab3fd85c8ce8e5b040"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": "e6c4c771911c211618a2d46488dc7e9e499f051773cd4ff4faeca6fe55fdf569"
+      }
+    ]
+  },
+  "confidence_by_confusion_group": {
+    "true_positive": {
+      "sample_count": 525,
+      "actual_label_counts": {
+        "0": 0,
+        "1": 525
+      },
+      "predicted_label_counts": {
+        "0": 0,
+        "1": 525
+      },
+      "counts": {
+        "true_positive": 525,
+        "true_negative": 0,
+        "false_positive": 0,
+        "false_negative": 0
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        },
+        "false_negative_rate": {
+          "numerator": 0,
+          "denominator": 525,
+          "value": 0.0
+        }
+      },
+      "confidence": {
+        "sample_count": 525,
+        "minimum": 0.9063234851252135,
+        "maximum": 0.9996326405266405,
+        "mean": 0.998980916841207,
+        "median": 0.9996009395643597
+      }
+    },
+    "true_negative": {
+      "sample_count": 365,
+      "actual_label_counts": {
+        "0": 365,
+        "1": 0
+      },
+      "predicted_label_counts": {
+        "0": 365,
+        "1": 0
+      },
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 365,
+        "false_positive": 0,
+        "false_negative": 0
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 0,
+          "denominator": 365,
+          "value": 0.0
+        },
+        "false_negative_rate": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        }
+      },
+      "confidence": {
+        "sample_count": 365,
+        "minimum": 0.0004999785431752227,
+        "maximum": 0.8932769871745087,
+        "mean": 0.02361800469671506,
+        "median": 0.0005215454301095732
+      }
+    },
+    "false_positive": {
+      "sample_count": 42,
+      "actual_label_counts": {
+        "0": 42,
+        "1": 0
+      },
+      "predicted_label_counts": {
+        "0": 0,
+        "1": 42
+      },
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 0,
+        "false_positive": 42,
+        "false_negative": 0
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 42,
+          "denominator": 42,
+          "value": 1.0
+        },
+        "false_negative_rate": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        }
+      },
+      "confidence": {
+        "sample_count": 42,
+        "minimum": 0.9248929054048124,
+        "maximum": 0.9996185741082809,
+        "mean": 0.9903173221946391,
+        "median": 0.9978811205304312
+      }
+    },
+    "false_negative": {
+      "sample_count": 9,
+      "actual_label_counts": {
+        "0": 0,
+        "1": 9
+      },
+      "predicted_label_counts": {
+        "0": 9,
+        "1": 0
+      },
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 0,
+        "false_positive": 0,
+        "false_negative": 9
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        },
+        "false_negative_rate": {
+          "numerator": 9,
+          "denominator": 9,
+          "value": 1.0
+        }
+      },
+      "confidence": {
+        "sample_count": 9,
+        "minimum": 0.0005576518812120726,
+        "maximum": 0.8586655558411417,
+        "mean": 0.401204081674278,
+        "median": 0.47291093811683393
+      }
+    }
+  },
+  "requested_source_comparison": {
+    "wildguard_judgecomp": {
+      "sample_count": 46,
+      "actual_label_counts": {
+        "0": 33,
+        "1": 13
+      },
+      "predicted_label_counts": {
+        "0": 6,
+        "1": 40
+      },
+      "counts": {
+        "true_positive": 13,
+        "true_negative": 6,
+        "false_positive": 27,
+        "false_negative": 0
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 27,
+          "denominator": 33,
+          "value": 0.8181818181818182
+        },
+        "false_negative_rate": {
+          "numerator": 0,
+          "denominator": 13,
+          "value": 0.0
+        }
+      },
+      "confidence": {
+        "sample_count": 46,
+        "minimum": 0.000940985094523383,
+        "maximum": 0.9996185741082809,
+        "mean": 0.9042137176247521,
+        "median": 0.9994117361592874
+      }
+    },
+    "harmbench": {
+      "sample_count": 14,
+      "actual_label_counts": {
+        "0": 0,
+        "1": 14
+      },
+      "predicted_label_counts": {
+        "0": 7,
+        "1": 7
+      },
+      "counts": {
+        "true_positive": 7,
+        "true_negative": 0,
+        "false_positive": 0,
+        "false_negative": 7
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        },
+        "false_negative_rate": {
+          "numerator": 7,
+          "denominator": 14,
+          "value": 0.5
+        }
+      },
+      "confidence": {
+        "sample_count": 14,
+        "minimum": 0.0005576518812120726,
+        "maximum": 0.9957752294219786,
+        "mean": 0.741056416218686,
+        "median": 0.8824945204831776
+      }
+    },
+    "harmbench_benign": {
+      "sample_count": 18,
+      "actual_label_counts": {
+        "0": 18,
+        "1": 0
+      },
+      "predicted_label_counts": {
+        "0": 11,
+        "1": 7
+      },
+      "counts": {
+        "true_positive": 0,
+        "true_negative": 11,
+        "false_positive": 7,
+        "false_negative": 0
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 7,
+          "denominator": 18,
+          "value": 0.3888888888888889
+        },
+        "false_negative_rate": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null
+        }
+      },
+      "confidence": {
+        "sample_count": 18,
+        "minimum": 0.0006824176814372061,
+        "maximum": 0.9956493069106858,
+        "mean": 0.6698007052199537,
+        "median": 0.8195838124883652
+      }
+    },
+    "neuralchemy_v1": {
+      "sample_count": 558,
+      "actual_label_counts": {
+        "0": 352,
+        "1": 206
+      },
+      "predicted_label_counts": {
+        "0": 347,
+        "1": 211
+      },
+      "counts": {
+        "true_positive": 204,
+        "true_negative": 345,
+        "false_positive": 7,
+        "false_negative": 2
+      },
+      "rates": {
+        "false_positive_rate": {
+          "numerator": 7,
+          "denominator": 352,
+          "value": 0.019886363636363636
+        },
+        "false_negative_rate": {
+          "numerator": 2,
+          "denominator": 206,
+          "value": 0.009708737864077669
+        }
+      },
+      "confidence": {
+        "sample_count": 558,
+        "minimum": 0.0004999785431752227,
+        "maximum": 0.9996317049706046,
+        "mean": 0.3804533616128904,
+        "median": 0.0005592617710028943
+      }
+    }
+  },
+  "metadata_breakdowns": {
+    "category": {
+      "adversarial": {
+        "sample_count": 85,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 85
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 85
+        },
+        "counts": {
+          "true_positive": 85,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 85,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 85,
+          "minimum": 0.9991079041595599,
+          "maximum": 0.9996317049706046,
+          "mean": 0.9996072178715453,
+          "median": 0.9996170236842572
+        }
+      },
+      "agent_manipulation": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "counts": {
+          "true_positive": 3,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 3,
+          "minimum": 0.9996179119326453,
+          "maximum": 0.9996211753373839,
+          "mean": 0.9996198599642893,
+          "median": 0.9996204926228388
+        }
+      },
+      "benign": {
+        "sample_count": 396,
+        "actual_label_counts": {
+          "0": 396,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 361,
+          "1": 35
+        },
+        "counts": {
+          "true_positive": 0,
+          "true_negative": 361,
+          "false_positive": 35,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 35,
+            "denominator": 396,
+            "value": 0.08838383838383838
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          }
+        },
+        "confidence": {
+          "sample_count": 396,
+          "minimum": 0.0004999785431752227,
+          "maximum": 0.9996185741082809,
+          "mean": 0.10608600242153089,
+          "median": 0.0005230581519277775
+        }
+      },
+      "code_execution": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "counts": {
+          "true_positive": 1,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 1,
+          "minimum": 0.9996308703298245,
+          "maximum": 0.9996308703298245,
+          "mean": 0.9996308703298245,
+          "median": 0.9996308703298245
+        }
+      },
+      "context_confusion": {
+        "sample_count": 4,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "counts": {
+          "true_positive": 4,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 4,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 4,
+          "minimum": 0.9994325163874825,
+          "maximum": 0.9996299448198132,
+          "mean": 0.9995690247520712,
+          "median": 0.9996068189004945
+        }
+      },
+      "control": {
+        "sample_count": 5,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 4
+        },
+        "counts": {
+          "true_positive": 4,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 1,
+            "denominator": 5,
+            "value": 0.2
+          }
+        },
+        "confidence": {
+          "sample_count": 5,
+          "minimum": 0.00087704570910014,
+          "maximum": 0.9996147665256548,
+          "mean": 0.7998108174099999,
+          "median": 0.9994840160110553
+        }
+      },
+      "direct_injection": {
+        "sample_count": 293,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 293
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 293
+        },
+        "counts": {
+          "true_positive": 293,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 293,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 293,
+          "minimum": 0.9700477024877526,
+          "maximum": 0.9996326405266405,
+          "mean": 0.999342311339314,
+          "median": 0.9995788878182734
+        }
+      },
+      "edge_case": {
+        "sample_count": 11,
+        "actual_label_counts": {
+          "0": 11,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 4,
+          "1": 7
+        },
+        "counts": {
+          "true_positive": 0,
+          "true_negative": 4,
+          "false_positive": 7,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 7,
+            "denominator": 11,
+            "value": 0.6363636363636364
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          }
+        },
+        "confidence": {
+          "sample_count": 11,
+          "minimum": 0.0008471926964443227,
+          "maximum": 0.9993772277982507,
+          "mean": 0.7458038443226909,
+          "median": 0.9930214543214302
+        }
+      },
+      "encoding": {
+        "sample_count": 40,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 40
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 40
+        },
+        "counts": {
+          "true_positive": 40,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 40,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 40,
+          "minimum": 0.9896353434648503,
+          "maximum": 0.9996286921829731,
+          "mean": 0.9993533972010011,
+          "median": 0.9996105865069804
+        }
+      },
+      "encoding_obfuscation": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "counts": {
+          "true_positive": 3,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 3,
+          "minimum": 0.9996073167335933,
+          "maximum": 0.9996301164964002,
+          "mean": 0.9996209005522001,
+          "median": 0.999625268426607
+        }
+      },
+      "instruction_override": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_positive": 2,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 2,
+          "minimum": 0.9995892878334938,
+          "maximum": 0.9996309014716207,
+          "mean": 0.9996100946525572,
+          "median": 0.9996100946525572
+        }
+      },
+      "jailbreak": {
+        "sample_count": 48,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 48
+        },
+        "predicted_label_counts": {
+          "0": 7,
+          "1": 41
+        },
+        "counts": {
+          "true_positive": 41,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 7
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 7,
+            "denominator": 48,
+            "value": 0.14583333333333334
+          }
+        },
+        "confidence": {
+          "sample_count": 48,
+          "minimum": 0.0005576518812120726,
+          "maximum": 0.9996260034366736,
+          "mean": 0.9241238423947804,
+          "median": 0.9994667066780476
+        }
+      },
+      "model_fingerprinting": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_positive": 2,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 2,
+          "minimum": 0.9990933178576976,
+          "maximum": 0.9996219445030279,
+          "mean": 0.9993576311803627,
+          "median": 0.9993576311803627
+        }
+      },
+      "multi_turn": {
+        "sample_count": 9,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 9
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 9
+        },
+        "counts": {
+          "true_positive": 9,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 9,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 9,
+          "minimum": 0.9980358130071938,
+          "maximum": 0.9996265852096581,
+          "mean": 0.9992139129243155,
+          "median": 0.9995919386774461
+        }
+      },
+      "payload_injection": {
+        "sample_count": 4,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "counts": {
+          "true_positive": 4,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 4,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 4,
+          "minimum": 0.9995066630084827,
+          "maximum": 0.9996273407307275,
+          "mean": 0.9995892129752338,
+          "median": 0.9996114240808627
+        }
+      },
+      "persona_replacement": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "counts": {
+          "true_positive": 1,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 1,
+          "minimum": 0.9996314710610179,
+          "maximum": 0.9996314710610179,
+          "mean": 0.9996314710610179,
+          "median": 0.9996314710610179
+        }
+      },
+      "prompt_extraction": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 1
+        },
+        "counts": {
+          "true_positive": 1,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 1,
+            "denominator": 2,
+            "value": 0.5
+          }
+        },
+        "confidence": {
+          "sample_count": 2,
+          "minimum": 0.003767909884703497,
+          "maximum": 0.9988919545535293,
+          "mean": 0.5013299322191164,
+          "median": 0.5013299322191164
+        }
+      },
+      "prompt_injection": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "counts": {
+          "true_positive": 1,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 1,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 1,
+          "minimum": 0.9988833266732903,
+          "maximum": 0.9988833266732903,
+          "mean": 0.9988833266732903,
+          "median": 0.9988833266732903
+        }
+      },
+      "rag_poisoning": {
+        "sample_count": 6,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 6
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 6
+        },
+        "counts": {
+          "true_positive": 6,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 6,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 6,
+          "minimum": 0.9995333132185779,
+          "maximum": 0.9996235024717798,
+          "mean": 0.9995802001348868,
+          "median": 0.9995886085524975
+        }
+      },
+      "response_manipulation": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_positive": 2,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 2,
+          "minimum": 0.9995842355225747,
+          "maximum": 0.9996280871009512,
+          "mean": 0.9996061613117629,
+          "median": 0.9996061613117629
+        }
+      },
+      "system_extraction": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "counts": {
+          "true_positive": 3,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 3,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 3,
+          "minimum": 0.9987936062283989,
+          "maximum": 0.9995599724517588,
+          "mean": 0.9992060520062126,
+          "median": 0.9992645773384801
+        }
+      },
+      "system_manipulation": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_positive": 2,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 2,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 2,
+          "minimum": 0.9993381488247909,
+          "maximum": 0.9996216672496124,
+          "mean": 0.9994799080372017,
+          "median": 0.9994799080372017
+        }
+      },
+      "token_smuggling": {
+        "sample_count": 5,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "counts": {
+          "true_positive": 5,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 5,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 5,
+          "minimum": 0.9995266187001026,
+          "maximum": 0.9996315632728376,
+          "mean": 0.9995823675722957,
+          "median": 0.9996032528386726
+        }
+      },
+      "training_extraction": {
+        "sample_count": 13,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 13
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 13
+        },
+        "counts": {
+          "true_positive": 13,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 13,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 13,
+          "minimum": 0.9985953650215054,
+          "maximum": 0.999630182253799,
+          "mean": 0.9995052429868689,
+          "median": 0.9996010408388204
+        }
+      }
+    },
+    "source": {
+      "hackaprompt": {
+        "sample_count": 291,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 291
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 291
+        },
+        "counts": {
+          "true_positive": 291,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 291,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 291,
+          "minimum": 0.9700477024877526,
+          "maximum": 0.9996326405266405,
+          "mean": 0.9993420162824607,
+          "median": 0.9995795507673968
+        }
+      },
+      "harmbench": {
+        "sample_count": 14,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 14
+        },
+        "predicted_label_counts": {
+          "0": 7,
+          "1": 7
+        },
+        "counts": {
+          "true_positive": 7,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 7
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 7,
+            "denominator": 14,
+            "value": 0.5
+          }
+        },
+        "confidence": {
+          "sample_count": 14,
+          "minimum": 0.0005576518812120726,
+          "maximum": 0.9957752294219786,
+          "mean": 0.741056416218686,
+          "median": 0.8824945204831776
+        }
+      },
+      "harmbench_benign": {
+        "sample_count": 18,
+        "actual_label_counts": {
+          "0": 18,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 11,
+          "1": 7
+        },
+        "counts": {
+          "true_positive": 0,
+          "true_negative": 11,
+          "false_positive": 7,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 7,
+            "denominator": 18,
+            "value": 0.3888888888888889
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          }
+        },
+        "confidence": {
+          "sample_count": 18,
+          "minimum": 0.0006824176814372061,
+          "maximum": 0.9956493069106858,
+          "mean": 0.6698007052199537,
+          "median": 0.8195838124883652
+        }
+      },
+      "neuralchemy_v1": {
+        "sample_count": 558,
+        "actual_label_counts": {
+          "0": 352,
+          "1": 206
+        },
+        "predicted_label_counts": {
+          "0": 347,
+          "1": 211
+        },
+        "counts": {
+          "true_positive": 204,
+          "true_negative": 345,
+          "false_positive": 7,
+          "false_negative": 2
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 7,
+            "denominator": 352,
+            "value": 0.019886363636363636
+          },
+          "false_negative_rate": {
+            "numerator": 2,
+            "denominator": 206,
+            "value": 0.009708737864077669
+          }
+        },
+        "confidence": {
+          "sample_count": 558,
+          "minimum": 0.0004999785431752227,
+          "maximum": 0.9996317049706046,
+          "mean": 0.3804533616128904,
+          "median": 0.0005592617710028943
+        }
+      },
+      "original": {
+        "sample_count": 14,
+        "actual_label_counts": {
+          "0": 4,
+          "1": 10
+        },
+        "predicted_label_counts": {
+          "0": 3,
+          "1": 11
+        },
+        "counts": {
+          "true_positive": 10,
+          "true_negative": 3,
+          "false_positive": 1,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 1,
+            "denominator": 4,
+            "value": 0.25
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 10,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 14,
+          "minimum": 0.0008703800457971313,
+          "maximum": 0.9996301164964002,
+          "mean": 0.7973700909449862,
+          "median": 0.99938524211147
+        }
+      },
+      "wildguard_judgecomp": {
+        "sample_count": 46,
+        "actual_label_counts": {
+          "0": 33,
+          "1": 13
+        },
+        "predicted_label_counts": {
+          "0": 6,
+          "1": 40
+        },
+        "counts": {
+          "true_positive": 13,
+          "true_negative": 6,
+          "false_positive": 27,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 27,
+            "denominator": 33,
+            "value": 0.8181818181818182
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 13,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 46,
+          "minimum": 0.000940985094523383,
+          "maximum": 0.9996185741082809,
+          "mean": 0.9042137176247521,
+          "median": 0.9994117361592874
+        }
+      }
+    },
+    "severity": {
+      "": {
+        "sample_count": 407,
+        "actual_label_counts": {
+          "0": 407,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 365,
+          "1": 42
+        },
+        "counts": {
+          "true_positive": 0,
+          "true_negative": 365,
+          "false_positive": 42,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 42,
+            "denominator": 407,
+            "value": 0.10319410319410319
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          }
+        },
+        "confidence": {
+          "sample_count": 407,
+          "minimum": 0.0004999785431752227,
+          "maximum": 0.9996185741082809,
+          "mean": 0.12337567382426497,
+          "median": 0.0005238891541097797
+        }
+      },
+      "critical": {
+        "sample_count": 21,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 21
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 20
+        },
+        "counts": {
+          "true_positive": 20,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 1,
+            "denominator": 21,
+            "value": 0.047619047619047616
+          }
+        },
+        "confidence": {
+          "sample_count": 21,
+          "minimum": 0.003767909884703497,
+          "maximum": 0.9996304199759103,
+          "mean": 0.9521351765228238,
+          "median": 0.9996079829698323
+        }
+      },
+      "high": {
+        "sample_count": 168,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 168
+        },
+        "predicted_label_counts": {
+          "0": 7,
+          "1": 161
+        },
+        "counts": {
+          "true_positive": 161,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 7
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 7,
+            "denominator": 168,
+            "value": 0.041666666666666664
+          }
+        },
+        "confidence": {
+          "sample_count": 168,
+          "minimum": 0.0005576518812120726,
+          "maximum": 0.9996317049706046,
+          "mean": 0.9779988043964768,
+          "median": 0.9996081256044529
+        }
+      },
+      "low": {
+        "sample_count": 6,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 6
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 5
+        },
+        "counts": {
+          "true_positive": 5,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 1,
+            "denominator": 6,
+            "value": 0.16666666666666666
+          }
+        },
+        "confidence": {
+          "sample_count": 6,
+          "minimum": 0.00087704570910014,
+          "maximum": 0.9996147665256548,
+          "mean": 0.8330717173748963,
+          "median": 0.999481226342068
+        }
+      },
+      "medium": {
+        "sample_count": 339,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 339
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 339
+        },
+        "counts": {
+          "true_positive": 339,
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 0,
+            "denominator": 0,
+            "value": null
+          },
+          "false_negative_rate": {
+            "numerator": 0,
+            "denominator": 339,
+            "value": 0.0
+          }
+        },
+        "confidence": {
+          "sample_count": 339,
+          "minimum": 0.9700477024877526,
+          "maximum": 0.9996326405266405,
+          "mean": 0.9993473449170074,
+          "median": 0.9995881421057745
+        }
+      }
+    },
+    "augmented": {
+      "false": {
+        "sample_count": 941,
+        "actual_label_counts": {
+          "0": 407,
+          "1": 534
+        },
+        "predicted_label_counts": {
+          "0": 374,
+          "1": 567
+        },
+        "counts": {
+          "true_positive": 525,
+          "true_negative": 365,
+          "false_positive": 42,
+          "false_negative": 9
+        },
+        "rates": {
+          "false_positive_rate": {
+            "numerator": 42,
+            "denominator": 407,
+            "value": 0.10319410319410319
+          },
+          "false_negative_rate": {
+            "numerator": 9,
+            "denominator": 534,
+            "value": 0.016853932584269662
+          }
+        },
+        "confidence": {
+          "sample_count": 941,
+          "minimum": 0.0004999785431752227,
+          "maximum": 0.9996326405266405,
+          "mean": 0.6145480524157046,
+          "median": 0.9993899793122732
+        }
+      }
+    }
+  },
+  "metadata_label_consistency": {
+    "category": {
+      "label_counts_by_value": {
+        "benign": {
+          "0": 396,
+          "1": 0
+        },
+        "direct_injection": {
+          "0": 0,
+          "1": 293
+        },
+        "encoding_obfuscation": {
+          "0": 0,
+          "1": 3
+        },
+        "system_extraction": {
+          "0": 0,
+          "1": 3
+        },
+        "token_smuggling": {
+          "0": 0,
+          "1": 5
+        },
+        "jailbreak": {
+          "0": 0,
+          "1": 48
+        },
+        "adversarial": {
+          "0": 0,
+          "1": 85
+        },
+        "edge_case": {
+          "0": 11,
+          "1": 0
+        },
+        "encoding": {
+          "0": 0,
+          "1": 40
+        },
+        "context_confusion": {
+          "0": 0,
+          "1": 4
+        },
+        "training_extraction": {
+          "0": 0,
+          "1": 13
+        },
+        "rag_poisoning": {
+          "0": 0,
+          "1": 6
+        },
+        "payload_injection": {
+          "0": 0,
+          "1": 4
+        },
+        "agent_manipulation": {
+          "0": 0,
+          "1": 3
+        },
+        "response_manipulation": {
+          "0": 0,
+          "1": 2
+        },
+        "model_fingerprinting": {
+          "0": 0,
+          "1": 2
+        },
+        "prompt_extraction": {
+          "0": 0,
+          "1": 2
+        },
+        "system_manipulation": {
+          "0": 0,
+          "1": 2
+        },
+        "multi_turn": {
+          "0": 0,
+          "1": 9
+        },
+        "prompt_injection": {
+          "0": 0,
+          "1": 1
+        },
+        "control": {
+          "0": 0,
+          "1": 5
+        },
+        "persona_replacement": {
+          "0": 0,
+          "1": 1
+        },
+        "code_execution": {
+          "0": 0,
+          "1": 1
+        },
+        "instruction_override": {
+          "0": 0,
+          "1": 2
+        }
+      },
+      "potential_mixed_label_values": [],
+      "interpretation": "Mixed labels indicate metadata/label combinations worth reviewing; metadata is not treated as ground truth."
+    },
+    "source": {
+      "label_counts_by_value": {
+        "original": {
+          "0": 4,
+          "1": 10
+        },
+        "wildguard_judgecomp": {
+          "0": 33,
+          "1": 13
+        },
+        "harmbench": {
+          "0": 0,
+          "1": 14
+        },
+        "harmbench_benign": {
+          "0": 18,
+          "1": 0
+        },
+        "hackaprompt": {
+          "0": 0,
+          "1": 291
+        },
+        "neuralchemy_v1": {
+          "0": 352,
+          "1": 206
+        }
+      },
+      "potential_mixed_label_values": [
+        "neuralchemy_v1",
+        "original",
+        "wildguard_judgecomp"
+      ],
+      "interpretation": "Mixed labels indicate metadata/label combinations worth reviewing; metadata is not treated as ground truth."
+    }
+  },
+  "test_split_loaded": false,
+  "prompt_text_included": false,
+  "limitations": [
+    "This investigation uses validation data only and does not establish held-out test performance.",
+    "Confidence summaries describe model scores; they are not calibrated probabilities.",
+    "Metadata is descriptive and is not treated as ground truth for labels.",
+    "Small groups can produce unstable rates and confidence summaries.",
+    "The threshold was not tuned or changed for this investigation."
+  ]
+}

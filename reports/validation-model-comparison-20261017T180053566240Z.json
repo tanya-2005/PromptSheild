@@ -1,0 +1,199 @@
+{
+  "experiment": "promptshield_validation_model_comparison",
+  "timestamp_utc": "2026-10-17T18:00:53.406499+00:00",
+  "evaluation_status": "completed",
+  "validation_only": true,
+  "validation_path": "data/raw/validation.parquet",
+  "validation_rows": 941,
+  "label_distribution": {
+    "0": 407,
+    "1": 534
+  },
+  "models": {
+    "logistic_regression": {
+      "metrics": {
+        "accuracy": 0.9415515409139213,
+        "per_class": {
+          "0": {
+            "precision": 0.9756756756756757,
+            "recall": 0.8869778869778869,
+            "f1": 0.9292149292149292,
+            "support": 407
+          },
+          "1": {
+            "precision": 0.9194395796847635,
+            "recall": 0.9831460674157303,
+            "f1": 0.9502262443438914,
+            "support": 534
+          }
+        },
+        "macro_f1": 0.9397205867794103,
+        "confusion_matrix": [
+          [
+            361,
+            46
+          ],
+          [
+            9,
+            525
+          ]
+        ],
+        "support": {
+          "0": 407,
+          "1": 534
+        },
+        "false_positive_rate_benign": 0.11302211302211303,
+        "false_negative_rate_malicious": 0.016853932584269662
+      },
+      "latency": {
+        "model": "logistic_regression",
+        "measured_examples": 941,
+        "elapsed_seconds": 0.027118199999677017,
+        "mean_ms_per_text": 0.02881849096671309,
+        "method": "One full validation-batch prediction using perf_counter."
+      },
+      "configuration": {
+        "artifact_path": "models/baseline.joblib",
+        "experiment": "tfidf_logistic_regression_baseline",
+        "decision_rule": "pipeline.predict(texts) -> numeric class label",
+        "score_interpretation": "Logistic Regression probabilities are model scores; no calibration claim is made."
+      }
+    },
+    "linear_svm": {
+      "metrics": {
+        "accuracy": 0.9564293304994687,
+        "per_class": {
+          "0": {
+            "precision": 0.9716494845360825,
+            "recall": 0.9262899262899262,
+            "f1": 0.9484276729559749,
+            "support": 407
+          },
+          "1": {
+            "precision": 0.945750452079566,
+            "recall": 0.9794007490636704,
+            "f1": 0.9622815087396505,
+            "support": 534
+          }
+        },
+        "macro_f1": 0.9553545908478127,
+        "confusion_matrix": [
+          [
+            377,
+            30
+          ],
+          [
+            11,
+            523
+          ]
+        ],
+        "support": {
+          "0": 407,
+          "1": 534
+        },
+        "false_positive_rate_benign": 0.07371007371007371,
+        "false_negative_rate_malicious": 0.020599250936329586
+      },
+      "latency": {
+        "model": "linear_svm",
+        "measured_examples": 941,
+        "elapsed_seconds": 0.018556700000772253,
+        "mean_ms_per_text": 0.019720191286686773,
+        "method": "One full validation-batch prediction using perf_counter."
+      },
+      "configuration": {
+        "artifact_path": "models/linear-svm.joblib",
+        "experiment": "tfidf_linear_svm_comparison",
+        "decision_rule": "pipeline.predict(texts) -> numeric class label",
+        "score_interpretation": "LinearSVC decision_function scores are not calibrated probabilities."
+      }
+    },
+    "deberta": {
+      "metrics": {
+        "accuracy": 0.9458023379383634,
+        "per_class": {
+          "0": {
+            "precision": 0.9759358288770054,
+            "recall": 0.8968058968058968,
+            "f1": 0.9346991037131882,
+            "support": 407
+          },
+          "1": {
+            "precision": 0.9259259259259259,
+            "recall": 0.9831460674157303,
+            "f1": 0.9536784741144414,
+            "support": 534
+          }
+        },
+        "macro_f1": 0.9441887889138147,
+        "confusion_matrix": [
+          [
+            365,
+            42
+          ],
+          [
+            9,
+            525
+          ]
+        ],
+        "support": {
+          "0": 407,
+          "1": 534
+        },
+        "false_positive_rate_benign": 0.10319410319410319,
+        "false_negative_rate_malicious": 0.016853932584269662
+      },
+      "latency": {
+        "model": "deberta",
+        "measured_examples": 941,
+        "elapsed_seconds": 290.61682959998143,
+        "mean_ms_per_text": 308.83828862909826,
+        "method": "One full validation-batch raw-logit inference using perf_counter."
+      },
+      "configuration": {
+        "checkpoint_directory": "models/deberta-v3-small",
+        "decision_rule": "softmax(logits)[:, 1] >= threshold",
+        "threshold": 0.9,
+        "model_configuration": {
+          "model_id": "microsoft/deberta-v3-small",
+          "architecture": [
+            "DebertaV2ForSequenceClassification"
+          ],
+          "model_type": "deberta-v2",
+          "num_labels": 2,
+          "id2label": {
+            "0": "LABEL_0",
+            "1": "LABEL_1"
+          },
+          "label2id": {
+            "LABEL_0": 0,
+            "LABEL_1": 1
+          },
+          "label_mapping_expected_by_project": {
+            "0": "benign",
+            "1": "malicious"
+          },
+          "tokenizer_class": "DebertaV2TokenizerFast",
+          "tokenizer_declared_model_max_length": 1000000000000000019884624838656,
+          "effective_max_sequence_length": 128,
+          "threshold": 0.9
+        },
+        "score_interpretation": "Class-1 softmax scores are model outputs; calibration has not been established."
+      }
+    }
+  },
+  "decision_rule_notes": [
+    "Logistic Regression and Linear SVM use their serialized pipeline.predict numeric class decisions.",
+    "DeBERTa uses class-1 softmax output >= 0.90, matching the current inference adapter.",
+    "LinearSVC decision_function values are not probabilities.",
+    "No threshold was tuned and no model was retrained."
+  ],
+  "test_split_loaded": false,
+  "prompt_text_included": false,
+  "limitations": [
+    "All metrics are validation-only and do not establish held-out test performance.",
+    "Latency depends on hardware, runtime, batch behavior, and process state; these measurements are not a production capacity benchmark.",
+    "The three models have different score semantics and preprocessing/runtime costs, so score magnitudes are not directly comparable.",
+    "Checkpoint and artifact identity do not prove historical training provenance."
+  ]
+}

@@ -1,0 +1,4 @@
+# Test-only dependencies. Runtime dependencies live in requirements.txt.
+# Versions match the environment in which the full suite passes.
+pytest==9.1.1
+httpx==0.28.1

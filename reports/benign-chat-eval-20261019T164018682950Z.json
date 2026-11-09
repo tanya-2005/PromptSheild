@@ -1,0 +1,312 @@
+{
+  "report": "benign-chat-eval",
+  "created_utc": "20261019T164018682950Z",
+  "protocol": {
+    "document": "docs/benign-chat-eval-proposal.md",
+    "frozen": "2026-10-19",
+    "single_run": true
+  },
+  "test_split_loaded": false,
+  "model": {
+    "checkpoint": "models/deberta-v3-small",
+    "safetensors_sha256": "2cefb8e40ade17940899ef523c7dea2a1bd1813ba0373edda84481a32c783614",
+    "checkpoint_hash_matches_decision_audit": true,
+    "threshold": 0.9,
+    "max_length_tokens": 128,
+    "max_prompt_length_chars": 4096,
+    "device": "cpu"
+  },
+  "gateway": {
+    "policy_id": "band_v1",
+    "allow_max": 0.7,
+    "block_min": 0.9,
+    "status": "fixed local band policy with defaults chosen from a validation-only abstention grid for illustration; not claimed optimal and not established on held-out test data"
+  },
+  "inputs": {
+    "manifest": "data/eval-manifest.json",
+    "datasets": [
+      {
+        "name": "databricks/databricks-dolly-15k",
+        "commit": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+        "license": "cc-by-sa-3.0",
+        "license_source": "official Hugging Face dataset card metadata, verified 2026-10-19",
+        "attribution": "\"databricks-dolly-15k\" by Databricks, Inc., licensed under CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)",
+        "file": "data/raw-eval/dolly/databricks-dolly-15k.jsonl",
+        "bytes": 13085339,
+        "sha256": "2df9083338b4abd6bceb5635764dab5d833b393b55759dffb0959b6fcbf794ec",
+        "source_rows": 15011
+      },
+      {
+        "name": "OpenAssistant/oasst1",
+        "commit": "fdf72ae0827c1cda404aff25b6603abec9e3399b",
+        "license": "apache-2.0",
+        "license_source": "official Hugging Face dataset card metadata, verified 2026-10-19",
+        "attribution": "OpenAssistant Conversations (oasst1), Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0)",
+        "file": "data/raw-eval/oasst1/train.parquet",
+        "bytes": 39516251,
+        "sha256": "bbfadf5ed1278ba2208c837fdcad865adf65f5df55d80abadab2745db13fcb5e",
+        "source_rows": 84437
+      }
+    ]
+  },
+  "integrity": {
+    "manifest_verified_before_scoring": true,
+    "revision_pinned_and_verified": true,
+    "license_metadata_verified": true,
+    "attribution_recorded": true,
+    "checkpoint_hash_matches_decision_audit": true,
+    "positive_control": {
+      "expected_blocks": 4,
+      "actual_blocks": 4,
+      "passed": true
+    }
+  },
+  "eligibility_rules": {
+    "dolly": [
+      "instruction present, non-empty, >= 4 chars",
+      "serving char limit <= MAX_PROMPT_LENGTH (execution-time rule mirroring API validation, disclosed)"
+    ],
+    "oasst1": [
+      "role=prompter, lang=en, parent_id=null (root), deleted=false, tree_state=ready_for_export",
+      "review_result=true and review_count>=3",
+      "reviewer negative labels all 0: spam, lang_mismatch, pii, not_appropriate, hate_speech, sexual_content, toxicity, violence",
+      "reviewer quality label >= 0.5 (positive benign-quality evidence)",
+      "detoxify toxicity < 0.2 and severe_toxicity < 0.1",
+      "text >= 10 chars",
+      "serving char limit <= MAX_PROMPT_LENGTH (execution-time rule mirroring API validation, disclosed)"
+    ]
+  },
+  "eligibility_counts": {
+    "dolly": {
+      "source_rows": 15011,
+      "excluded": {
+        "duplicate_within": 262,
+        "exact_match_reference": 3,
+        "exceeds_serving_char_limit": 1
+      },
+      "excluded_total": 266,
+      "candidates_retained": 14745
+    },
+    "oasst1": {
+      "source_rows": 84437,
+      "excluded": {
+        "detoxify_toxicity_at_or_above_limit": 5,
+        "duplicate_cross_dataset": 3,
+        "not_english": 16325,
+        "not_prompter": 52912,
+        "not_root_message": 11718,
+        "quality_below_threshold": 87,
+        "quality_label_absent": 118,
+        "reviewer_flagged_hate_speech": 5,
+        "reviewer_flagged_lang_mismatch": 235,
+        "reviewer_flagged_not_appropriate": 78,
+        "reviewer_flagged_pii": 8,
+        "reviewer_flagged_sexual_content": 4,
+        "reviewer_flagged_spam": 204,
+        "reviewer_flagged_toxicity": 2200,
+        "reviewer_flagged_violence": 43
+      },
+      "excluded_total": 83945,
+      "candidates_retained": 492
+    }
+  },
+  "deduplication": {
+    "method": "lowercase + whitespace collapse + edge punctuation strip; exact set match and same-first-50-char bucket with SequenceMatcher ratio >= 0.95; deduplicated against train.parquet and validation.parquet only (test split never read) plus within-dataset and cross-dataset checks",
+    "counts": {
+      "dolly": {
+        "duplicate_within": 262,
+        "exact_match_reference": 3,
+        "exceeds_serving_char_limit": 1
+      },
+      "oasst1": {
+        "detoxify_toxicity_at_or_above_limit": 5,
+        "duplicate_cross_dataset": 3,
+        "not_english": 16325,
+        "not_prompter": 52912,
+        "not_root_message": 11718,
+        "quality_below_threshold": 87,
+        "quality_label_absent": 118,
+        "reviewer_flagged_hate_speech": 5,
+        "reviewer_flagged_lang_mismatch": 235,
+        "reviewer_flagged_not_appropriate": 78,
+        "reviewer_flagged_pii": 8,
+        "reviewer_flagged_sexual_content": 4,
+        "reviewer_flagged_spam": 204,
+        "reviewer_flagged_toxicity": 2200,
+        "reviewer_flagged_violence": 43
+      }
+    },
+    "reference_texts_indexed": 5332
+  },
+  "selection": {
+    "method": "sort eligible deduplicated candidates by sha256(normalized text) ascending, take first 100 per dataset",
+    "dolly_selected": 100,
+    "oasst1_selected": 100,
+    "dolly_candidates_after_dedup": 14745,
+    "oasst1_candidates_after_dedup": 492
+  },
+  "metrics": {
+    "n": 200,
+    "gateway": {
+      "allow": {
+        "count": 30,
+        "rate": 0.15,
+        "wilson_95": [
+          0.10713593562241995,
+          0.20605579284166659
+        ]
+      },
+      "review": {
+        "count": 8,
+        "rate": 0.04,
+        "wilson_95": [
+          0.020405632066152306,
+          0.07693206820093293
+        ]
+      },
+      "block": {
+        "count": 162,
+        "rate": 0.81,
+        "wilson_95": [
+          0.7499876129240015,
+          0.8583282847220932
+        ]
+      }
+    },
+    "classifier": {
+      "malicious": 162,
+      "benign": 38
+    },
+    "score": {
+      "min": 0.0005547725595533848,
+      "max": 0.9996234178543091,
+      "mean": 0.8443837027257541,
+      "median": 0.9971417486667633
+    },
+    "score_buckets": {
+      "[0.00,0.10]": 24,
+      "[0.10,0.70]": 6,
+      "[0.70,0.90]": 8,
+      "[0.90,1.00]": 162
+    },
+    "rows_with_strong_marker": 0,
+    "marker_rule_counts": {},
+    "truncated_at_max_length": 3
+  },
+  "exploratory_by_dataset": {
+    "dolly": {
+      "n": 100,
+      "gateway": {
+        "allow": {
+          "count": 19,
+          "rate": 0.19,
+          "wilson_95": [
+            0.12514751509768735,
+            0.27778845379064376
+          ]
+        },
+        "review": {
+          "count": 6,
+          "rate": 0.06,
+          "wilson_95": [
+            0.027786123963188192,
+            0.1247681544589592
+          ]
+        },
+        "block": {
+          "count": 75,
+          "rate": 0.75,
+          "wilson_95": [
+            0.656955364519384,
+            0.8245478863771232
+          ]
+        }
+      },
+      "classifier": {
+        "malicious": 75,
+        "benign": 25
+      },
+      "score": {
+        "min": 0.0005674457643181086,
+        "max": 0.9995397329330444,
+        "mean": 0.7974591981369303,
+        "median": 0.9920103847980499
+      },
+      "score_buckets": {
+        "[0.00,0.10]": 15,
+        "[0.10,0.70]": 4,
+        "[0.70,0.90]": 6,
+        "[0.90,1.00]": 75
+      },
+      "rows_with_strong_marker": 0,
+      "marker_rule_counts": {}
+    },
+    "oasst1": {
+      "n": 100,
+      "gateway": {
+        "allow": {
+          "count": 11,
+          "rate": 0.11,
+          "wilson_95": [
+            0.06254196357064568,
+            0.18631296503080313
+          ]
+        },
+        "review": {
+          "count": 2,
+          "rate": 0.02,
+          "wilson_95": [
+            0.00550196755016235,
+            0.07001179072854388
+          ]
+        },
+        "block": {
+          "count": 87,
+          "rate": 0.87,
+          "wilson_95": [
+            0.7901964855992357,
+            0.9224283257275948
+          ]
+        }
+      },
+      "classifier": {
+        "malicious": 87,
+        "benign": 13
+      },
+      "score": {
+        "min": 0.0005547725595533848,
+        "max": 0.9996234178543091,
+        "mean": 0.8913082073145779,
+        "median": 0.99871426820755
+      },
+      "score_buckets": {
+        "[0.00,0.10]": 9,
+        "[0.10,0.70]": 2,
+        "[0.70,0.90]": 2,
+        "[0.90,1.00]": 87
+      },
+      "rows_with_strong_marker": 0,
+      "marker_rule_counts": {}
+    }
+  },
+  "operational_decision": {
+    "kind": "operational_go_no_go_rule_not_a_formal_equality_test",
+    "reference_rate": 0.10319410319410319,
+    "reference_wilson_95": [
+      0.0773,
+      0.1366
+    ],
+    "reference_note": "10.3% (42/407) is the observed validation-slice FPR benchmark, not an estimate of the true population FPR; overlapping intervals are not evidence of equality between populations",
+    "new_evaluation_wilson_95": [
+      0.7499876129240015,
+      0.8583282847220932
+    ],
+    "outcome": "b_new_slice_materially_worse_than_observed_validation_benchmark"
+  },
+  "limitations": "Public dataset prompts are not production traffic: English-only, single-turn, and drawn from two sources; n=200 supports only an overall block-rate estimate (roughly +/-4-7 percentage points), not subgroup, recall, calibration, or non-English claims. Eligibility requires reviewer-confirmed benign quality, but crowd annotations are imperfect. Intervals overlapping the validation benchmark do not prove the rates are equal. This slice is single-use: if mitigation is ever pursued it becomes development data and cannot support post-fix claims.",
+  "privacy": {
+    "raw_prompts_in_report": false,
+    "raw_prompts_on_console": false,
+    "raw_data_redistributed": false
+  }
+}

@@ -1,0 +1,1958 @@
+{
+  "experiment": "deberta_source_reliability_and_gateway_policy",
+  "timestamp_utc": "2026-10-18T15:35:48.142403+00:00",
+  "evaluation_status": "completed",
+  "validation_only": true,
+  "input_reports": {
+    "error_analysis": "reports/deberta-error-analysis-20261017T174228255256Z.json",
+    "investigation": "reports/deberta-error-investigation-20261017T175221434197Z.json",
+    "calibration": "reports/deberta-confidence-calibration-20261018T140720575767Z.json"
+  },
+  "reuses_existing_predictions": true,
+  "new_inference_run": false,
+  "validation_rows": 941,
+  "label_distribution": {
+    "0": 407,
+    "1": 534
+  },
+  "threshold": 0.9,
+  "confusion_counts": {
+    "true_negative": 365,
+    "false_positive": 42,
+    "false_negative": 9,
+    "true_positive": 525,
+    "rates": {
+      "false_positive_rate": {
+        "numerator": 42,
+        "denominator": 407,
+        "value": 0.10319410319410319
+      },
+      "false_negative_rate": {
+        "numerator": 9,
+        "denominator": 534,
+        "value": 0.016853932584269662
+      }
+    }
+  },
+  "confidence_interval_method": {
+    "interval": "Wilson score, 95%",
+    "z": 1.959963984540054,
+    "why": "Wilson remains well behaved at small denominators and at proportions of exactly zero or one, unlike the normal approximation."
+  },
+  "stratified_rates": {
+    "source": {
+      "hackaprompt": {
+        "sample_count": 291,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 291
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 291,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "source:hackaprompt",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "source:hackaprompt",
+          "numerator": 0,
+          "denominator": 291,
+          "value": 0.0,
+          "wilson_95_lower": 8.673617379884035e-19,
+          "wilson_95_upper": 0.01302889639760697,
+          "wilson_95_width": 0.01302889639760697,
+          "stable": true,
+          "unstable_reasons": []
+        }
+      },
+      "harmbench": {
+        "sample_count": 14,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 14
+        },
+        "false_positive": 0,
+        "false_negative": 7,
+        "true_positive": 7,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "source:harmbench",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "source:harmbench",
+          "numerator": 7,
+          "denominator": 14,
+          "value": 0.5,
+          "wilson_95_lower": 0.26799202452413634,
+          "wilson_95_upper": 0.7320079754758637,
+          "wilson_95_width": 0.4640159509517274,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 14 < 30",
+            "interval width 0.464 > 0.25"
+          ]
+        }
+      },
+      "harmbench_benign": {
+        "sample_count": 18,
+        "actual_label_counts": {
+          "0": 18,
+          "1": 0
+        },
+        "false_positive": 7,
+        "false_negative": 0,
+        "true_positive": 0,
+        "true_negative": 11,
+        "false_positive_rate": {
+          "label": "source:harmbench_benign",
+          "numerator": 7,
+          "denominator": 18,
+          "value": 0.3888888888888889,
+          "wilson_95_lower": 0.2030524657216362,
+          "wilson_95_upper": 0.613809583977621,
+          "wilson_95_width": 0.41075711825598477,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 18 < 30",
+            "interval width 0.411 > 0.25"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "source:harmbench_benign",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        }
+      },
+      "neuralchemy_v1": {
+        "sample_count": 558,
+        "actual_label_counts": {
+          "0": 352,
+          "1": 206
+        },
+        "false_positive": 7,
+        "false_negative": 2,
+        "true_positive": 204,
+        "true_negative": 345,
+        "false_positive_rate": {
+          "label": "source:neuralchemy_v1",
+          "numerator": 7,
+          "denominator": 352,
+          "value": 0.019886363636363636,
+          "wilson_95_lower": 0.009665619217164686,
+          "wilson_95_upper": 0.04047316697099644,
+          "wilson_95_width": 0.030807547753831755,
+          "stable": true,
+          "unstable_reasons": []
+        },
+        "false_negative_rate": {
+          "label": "source:neuralchemy_v1",
+          "numerator": 2,
+          "denominator": 206,
+          "value": 0.009708737864077669,
+          "wilson_95_lower": 0.0026665364740969914,
+          "wilson_95_upper": 0.034701955266110154,
+          "wilson_95_width": 0.03203541879201316,
+          "stable": true,
+          "unstable_reasons": []
+        }
+      },
+      "original": {
+        "sample_count": 14,
+        "actual_label_counts": {
+          "0": 4,
+          "1": 10
+        },
+        "false_positive": 1,
+        "false_negative": 0,
+        "true_positive": 10,
+        "true_negative": 3,
+        "false_positive_rate": {
+          "label": "source:original",
+          "numerator": 1,
+          "denominator": 4,
+          "value": 0.25,
+          "wilson_95_lower": 0.04558726080970055,
+          "wilson_95_upper": 0.6993581574175981,
+          "wilson_95_width": 0.6537708966078976,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 4 < 30",
+            "interval width 0.654 > 0.25"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "source:original",
+          "numerator": 0,
+          "denominator": 10,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.2775327998628892,
+          "wilson_95_width": 0.2775327998628892,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 10 < 30",
+            "interval width 0.278 > 0.25"
+          ]
+        }
+      },
+      "wildguard_judgecomp": {
+        "sample_count": 46,
+        "actual_label_counts": {
+          "0": 33,
+          "1": 13
+        },
+        "false_positive": 27,
+        "false_negative": 0,
+        "true_positive": 13,
+        "true_negative": 6,
+        "false_positive_rate": {
+          "label": "source:wildguard_judgecomp",
+          "numerator": 27,
+          "denominator": 33,
+          "value": 0.8181818181818182,
+          "wilson_95_lower": 0.6561176836533009,
+          "wilson_95_upper": 0.9138923179105933,
+          "wilson_95_width": 0.2577746342572924,
+          "stable": false,
+          "unstable_reasons": [
+            "interval width 0.258 > 0.25"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "source:wildguard_judgecomp",
+          "numerator": 0,
+          "denominator": 13,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.22809537235419838,
+          "wilson_95_width": 0.22809537235419838,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 13 < 30"
+          ]
+        }
+      }
+    },
+    "category": {
+      "adversarial": {
+        "sample_count": 85,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 85
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 85,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:adversarial",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:adversarial",
+          "numerator": 0,
+          "denominator": 85,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.04323948381405149,
+          "wilson_95_width": 0.04323948381405149,
+          "stable": true,
+          "unstable_reasons": []
+        }
+      },
+      "agent_manipulation": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 3,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:agent_manipulation",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:agent_manipulation",
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0.0,
+          "wilson_95_lower": 5.551115123125783e-17,
+          "wilson_95_upper": 0.5614970317550454,
+          "wilson_95_width": 0.5614970317550454,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 3 < 30",
+            "interval width 0.561 > 0.25"
+          ]
+        }
+      },
+      "benign": {
+        "sample_count": 396,
+        "actual_label_counts": {
+          "0": 396,
+          "1": 0
+        },
+        "false_positive": 35,
+        "false_negative": 0,
+        "true_positive": 0,
+        "true_negative": 361,
+        "false_positive_rate": {
+          "label": "category:benign",
+          "numerator": 35,
+          "denominator": 396,
+          "value": 0.08838383838383838,
+          "wilson_95_lower": 0.0642362532076075,
+          "wilson_95_upper": 0.12044059105582787,
+          "wilson_95_width": 0.056204337848220376,
+          "stable": true,
+          "unstable_reasons": []
+        },
+        "false_negative_rate": {
+          "label": "category:benign",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        }
+      },
+      "code_execution": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 1,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:code_execution",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:code_execution",
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.7934506856227626,
+          "wilson_95_width": 0.7934506856227626,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 1 < 30",
+            "interval width 0.793 > 0.25"
+          ]
+        }
+      },
+      "context_confusion": {
+        "sample_count": 4,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 4,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:context_confusion",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:context_confusion",
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.4898908364545973,
+          "wilson_95_width": 0.4898908364545973,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 4 < 30",
+            "interval width 0.490 > 0.25"
+          ]
+        }
+      },
+      "control": {
+        "sample_count": 5,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "false_positive": 0,
+        "false_negative": 1,
+        "true_positive": 4,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:control",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:control",
+          "numerator": 1,
+          "denominator": 5,
+          "value": 0.2,
+          "wilson_95_lower": 0.03622410863243014,
+          "wilson_95_upper": 0.6244653702374747,
+          "wilson_95_width": 0.5882412616050445,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 5 < 30",
+            "interval width 0.588 > 0.25"
+          ]
+        }
+      },
+      "direct_injection": {
+        "sample_count": 293,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 293
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 293,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:direct_injection",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:direct_injection",
+          "numerator": 0,
+          "denominator": 293,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.012941112861915096,
+          "wilson_95_width": 0.012941112861915096,
+          "stable": true,
+          "unstable_reasons": []
+        }
+      },
+      "edge_case": {
+        "sample_count": 11,
+        "actual_label_counts": {
+          "0": 11,
+          "1": 0
+        },
+        "false_positive": 7,
+        "false_negative": 0,
+        "true_positive": 0,
+        "true_negative": 4,
+        "false_positive_rate": {
+          "label": "category:edge_case",
+          "numerator": 7,
+          "denominator": 11,
+          "value": 0.6363636363636364,
+          "wilson_95_lower": 0.35380117450784887,
+          "wilson_95_upper": 0.8483352890463243,
+          "wilson_95_width": 0.4945341145384754,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 11 < 30",
+            "interval width 0.495 > 0.25"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:edge_case",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        }
+      },
+      "encoding": {
+        "sample_count": 40,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 40
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 40,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:encoding",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:encoding",
+          "numerator": 0,
+          "denominator": 40,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.08762160119728664,
+          "wilson_95_width": 0.08762160119728664,
+          "stable": true,
+          "unstable_reasons": []
+        }
+      },
+      "encoding_obfuscation": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 3,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:encoding_obfuscation",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:encoding_obfuscation",
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0.0,
+          "wilson_95_lower": 5.551115123125783e-17,
+          "wilson_95_upper": 0.5614970317550454,
+          "wilson_95_width": 0.5614970317550454,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 3 < 30",
+            "interval width 0.561 > 0.25"
+          ]
+        }
+      },
+      "instruction_override": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 2,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:instruction_override",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:instruction_override",
+          "numerator": 0,
+          "denominator": 2,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.6576197724933469,
+          "wilson_95_width": 0.6576197724933469,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 2 < 30",
+            "interval width 0.658 > 0.25"
+          ]
+        }
+      },
+      "jailbreak": {
+        "sample_count": 48,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 48
+        },
+        "false_positive": 0,
+        "false_negative": 7,
+        "true_positive": 41,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:jailbreak",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:jailbreak",
+          "numerator": 7,
+          "denominator": 48,
+          "value": 0.14583333333333334,
+          "wilson_95_lower": 0.07248249326603709,
+          "wilson_95_upper": 0.27167176524746284,
+          "wilson_95_width": 0.19918927198142575,
+          "stable": true,
+          "unstable_reasons": []
+        }
+      },
+      "model_fingerprinting": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 2,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:model_fingerprinting",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:model_fingerprinting",
+          "numerator": 0,
+          "denominator": 2,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.6576197724933469,
+          "wilson_95_width": 0.6576197724933469,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 2 < 30",
+            "interval width 0.658 > 0.25"
+          ]
+        }
+      },
+      "multi_turn": {
+        "sample_count": 9,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 9
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 9,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:multi_turn",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:multi_turn",
+          "numerator": 0,
+          "denominator": 9,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.2991450484195441,
+          "wilson_95_width": 0.2991450484195441,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 9 < 30",
+            "interval width 0.299 > 0.25"
+          ]
+        }
+      },
+      "payload_injection": {
+        "sample_count": 4,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 4,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:payload_injection",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:payload_injection",
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.4898908364545973,
+          "wilson_95_width": 0.4898908364545973,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 4 < 30",
+            "interval width 0.490 > 0.25"
+          ]
+        }
+      },
+      "persona_replacement": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 1,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:persona_replacement",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:persona_replacement",
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.7934506856227626,
+          "wilson_95_width": 0.7934506856227626,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 1 < 30",
+            "interval width 0.793 > 0.25"
+          ]
+        }
+      },
+      "prompt_extraction": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "false_positive": 0,
+        "false_negative": 1,
+        "true_positive": 1,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:prompt_extraction",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:prompt_extraction",
+          "numerator": 1,
+          "denominator": 2,
+          "value": 0.5,
+          "wilson_95_lower": 0.09453120573423074,
+          "wilson_95_upper": 0.9054687942657693,
+          "wilson_95_width": 0.8109375885315386,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 2 < 30",
+            "interval width 0.811 > 0.25"
+          ]
+        }
+      },
+      "prompt_injection": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 1,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:prompt_injection",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:prompt_injection",
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.7934506856227626,
+          "wilson_95_width": 0.7934506856227626,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 1 < 30",
+            "interval width 0.793 > 0.25"
+          ]
+        }
+      },
+      "rag_poisoning": {
+        "sample_count": 6,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 6
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 6,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:rag_poisoning",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:rag_poisoning",
+          "numerator": 0,
+          "denominator": 6,
+          "value": 0.0,
+          "wilson_95_lower": 2.7755575615628914e-17,
+          "wilson_95_upper": 0.3903342879021653,
+          "wilson_95_width": 0.3903342879021653,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 6 < 30",
+            "interval width 0.390 > 0.25"
+          ]
+        }
+      },
+      "response_manipulation": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 2,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:response_manipulation",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:response_manipulation",
+          "numerator": 0,
+          "denominator": 2,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.6576197724933469,
+          "wilson_95_width": 0.6576197724933469,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 2 < 30",
+            "interval width 0.658 > 0.25"
+          ]
+        }
+      },
+      "system_extraction": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 3,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:system_extraction",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:system_extraction",
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0.0,
+          "wilson_95_lower": 5.551115123125783e-17,
+          "wilson_95_upper": 0.5614970317550454,
+          "wilson_95_width": 0.5614970317550454,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 3 < 30",
+            "interval width 0.561 > 0.25"
+          ]
+        }
+      },
+      "system_manipulation": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 2,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:system_manipulation",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:system_manipulation",
+          "numerator": 0,
+          "denominator": 2,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.6576197724933469,
+          "wilson_95_width": 0.6576197724933469,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 2 < 30",
+            "interval width 0.658 > 0.25"
+          ]
+        }
+      },
+      "token_smuggling": {
+        "sample_count": 5,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 5,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:token_smuggling",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:token_smuggling",
+          "numerator": 0,
+          "denominator": 5,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.43448246478317476,
+          "wilson_95_width": 0.43448246478317476,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 5 < 30",
+            "interval width 0.434 > 0.25"
+          ]
+        }
+      },
+      "training_extraction": {
+        "sample_count": 13,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 13
+        },
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_positive": 13,
+        "true_negative": 0,
+        "false_positive_rate": {
+          "label": "category:training_extraction",
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "wilson_95_lower": null,
+          "wilson_95_upper": null,
+          "wilson_95_width": null,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 0 < 30"
+          ]
+        },
+        "false_negative_rate": {
+          "label": "category:training_extraction",
+          "numerator": 0,
+          "denominator": 13,
+          "value": 0.0,
+          "wilson_95_lower": 0.0,
+          "wilson_95_upper": 0.22809537235419838,
+          "wilson_95_width": 0.22809537235419838,
+          "stable": false,
+          "unstable_reasons": [
+            "denominator 13 < 30"
+          ]
+        }
+      }
+    }
+  },
+  "instability_findings": {
+    "rule": "flagged unstable when denominator < 30 or Wilson 95% interval width > 0.25",
+    "stable_count": 8,
+    "unstable": [
+      {
+        "group": "source:harmbench:false_negative_rate",
+        "numerator": 7,
+        "denominator": 14,
+        "value": 0.5,
+        "wilson_95_lower": 0.26799202452413634,
+        "wilson_95_upper": 0.7320079754758637,
+        "reasons": [
+          "denominator 14 < 30",
+          "interval width 0.464 > 0.25"
+        ]
+      },
+      {
+        "group": "source:harmbench_benign:false_positive_rate",
+        "numerator": 7,
+        "denominator": 18,
+        "value": 0.3888888888888889,
+        "wilson_95_lower": 0.2030524657216362,
+        "wilson_95_upper": 0.613809583977621,
+        "reasons": [
+          "denominator 18 < 30",
+          "interval width 0.411 > 0.25"
+        ]
+      },
+      {
+        "group": "source:original:false_positive_rate",
+        "numerator": 1,
+        "denominator": 4,
+        "value": 0.25,
+        "wilson_95_lower": 0.04558726080970055,
+        "wilson_95_upper": 0.6993581574175981,
+        "reasons": [
+          "denominator 4 < 30",
+          "interval width 0.654 > 0.25"
+        ]
+      },
+      {
+        "group": "source:original:false_negative_rate",
+        "numerator": 0,
+        "denominator": 10,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.2775327998628892,
+        "reasons": [
+          "denominator 10 < 30",
+          "interval width 0.278 > 0.25"
+        ]
+      },
+      {
+        "group": "source:wildguard_judgecomp:false_positive_rate",
+        "numerator": 27,
+        "denominator": 33,
+        "value": 0.8181818181818182,
+        "wilson_95_lower": 0.6561176836533009,
+        "wilson_95_upper": 0.9138923179105933,
+        "reasons": [
+          "interval width 0.258 > 0.25"
+        ]
+      },
+      {
+        "group": "source:wildguard_judgecomp:false_negative_rate",
+        "numerator": 0,
+        "denominator": 13,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.22809537235419838,
+        "reasons": [
+          "denominator 13 < 30"
+        ]
+      },
+      {
+        "group": "category:agent_manipulation:false_negative_rate",
+        "numerator": 0,
+        "denominator": 3,
+        "value": 0.0,
+        "wilson_95_lower": 5.551115123125783e-17,
+        "wilson_95_upper": 0.5614970317550454,
+        "reasons": [
+          "denominator 3 < 30",
+          "interval width 0.561 > 0.25"
+        ]
+      },
+      {
+        "group": "category:code_execution:false_negative_rate",
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.7934506856227626,
+        "reasons": [
+          "denominator 1 < 30",
+          "interval width 0.793 > 0.25"
+        ]
+      },
+      {
+        "group": "category:context_confusion:false_negative_rate",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.4898908364545973,
+        "reasons": [
+          "denominator 4 < 30",
+          "interval width 0.490 > 0.25"
+        ]
+      },
+      {
+        "group": "category:control:false_negative_rate",
+        "numerator": 1,
+        "denominator": 5,
+        "value": 0.2,
+        "wilson_95_lower": 0.03622410863243014,
+        "wilson_95_upper": 0.6244653702374747,
+        "reasons": [
+          "denominator 5 < 30",
+          "interval width 0.588 > 0.25"
+        ]
+      },
+      {
+        "group": "category:edge_case:false_positive_rate",
+        "numerator": 7,
+        "denominator": 11,
+        "value": 0.6363636363636364,
+        "wilson_95_lower": 0.35380117450784887,
+        "wilson_95_upper": 0.8483352890463243,
+        "reasons": [
+          "denominator 11 < 30",
+          "interval width 0.495 > 0.25"
+        ]
+      },
+      {
+        "group": "category:encoding_obfuscation:false_negative_rate",
+        "numerator": 0,
+        "denominator": 3,
+        "value": 0.0,
+        "wilson_95_lower": 5.551115123125783e-17,
+        "wilson_95_upper": 0.5614970317550454,
+        "reasons": [
+          "denominator 3 < 30",
+          "interval width 0.561 > 0.25"
+        ]
+      },
+      {
+        "group": "category:instruction_override:false_negative_rate",
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.6576197724933469,
+        "reasons": [
+          "denominator 2 < 30",
+          "interval width 0.658 > 0.25"
+        ]
+      },
+      {
+        "group": "category:model_fingerprinting:false_negative_rate",
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.6576197724933469,
+        "reasons": [
+          "denominator 2 < 30",
+          "interval width 0.658 > 0.25"
+        ]
+      },
+      {
+        "group": "category:multi_turn:false_negative_rate",
+        "numerator": 0,
+        "denominator": 9,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.2991450484195441,
+        "reasons": [
+          "denominator 9 < 30",
+          "interval width 0.299 > 0.25"
+        ]
+      },
+      {
+        "group": "category:payload_injection:false_negative_rate",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.4898908364545973,
+        "reasons": [
+          "denominator 4 < 30",
+          "interval width 0.490 > 0.25"
+        ]
+      },
+      {
+        "group": "category:persona_replacement:false_negative_rate",
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.7934506856227626,
+        "reasons": [
+          "denominator 1 < 30",
+          "interval width 0.793 > 0.25"
+        ]
+      },
+      {
+        "group": "category:prompt_extraction:false_negative_rate",
+        "numerator": 1,
+        "denominator": 2,
+        "value": 0.5,
+        "wilson_95_lower": 0.09453120573423074,
+        "wilson_95_upper": 0.9054687942657693,
+        "reasons": [
+          "denominator 2 < 30",
+          "interval width 0.811 > 0.25"
+        ]
+      },
+      {
+        "group": "category:prompt_injection:false_negative_rate",
+        "numerator": 0,
+        "denominator": 1,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.7934506856227626,
+        "reasons": [
+          "denominator 1 < 30",
+          "interval width 0.793 > 0.25"
+        ]
+      },
+      {
+        "group": "category:rag_poisoning:false_negative_rate",
+        "numerator": 0,
+        "denominator": 6,
+        "value": 0.0,
+        "wilson_95_lower": 2.7755575615628914e-17,
+        "wilson_95_upper": 0.3903342879021653,
+        "reasons": [
+          "denominator 6 < 30",
+          "interval width 0.390 > 0.25"
+        ]
+      },
+      {
+        "group": "category:response_manipulation:false_negative_rate",
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.6576197724933469,
+        "reasons": [
+          "denominator 2 < 30",
+          "interval width 0.658 > 0.25"
+        ]
+      },
+      {
+        "group": "category:system_extraction:false_negative_rate",
+        "numerator": 0,
+        "denominator": 3,
+        "value": 0.0,
+        "wilson_95_lower": 5.551115123125783e-17,
+        "wilson_95_upper": 0.5614970317550454,
+        "reasons": [
+          "denominator 3 < 30",
+          "interval width 0.561 > 0.25"
+        ]
+      },
+      {
+        "group": "category:system_manipulation:false_negative_rate",
+        "numerator": 0,
+        "denominator": 2,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.6576197724933469,
+        "reasons": [
+          "denominator 2 < 30",
+          "interval width 0.658 > 0.25"
+        ]
+      },
+      {
+        "group": "category:token_smuggling:false_negative_rate",
+        "numerator": 0,
+        "denominator": 5,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.43448246478317476,
+        "reasons": [
+          "denominator 5 < 30",
+          "interval width 0.434 > 0.25"
+        ]
+      },
+      {
+        "group": "category:training_extraction:false_negative_rate",
+        "numerator": 0,
+        "denominator": 13,
+        "value": 0.0,
+        "wilson_95_lower": 0.0,
+        "wilson_95_upper": 0.22809537235419838,
+        "reasons": [
+          "denominator 13 < 30"
+        ]
+      }
+    ],
+    "stable_groups": [
+      "source:hackaprompt:false_negative_rate",
+      "source:neuralchemy_v1:false_positive_rate",
+      "source:neuralchemy_v1:false_negative_rate",
+      "category:adversarial:false_negative_rate",
+      "category:benign:false_positive_rate",
+      "category:direct_injection:false_negative_rate",
+      "category:encoding:false_negative_rate",
+      "category:jailbreak:false_negative_rate"
+    ]
+  },
+  "metadata_label_consistency": {
+    "interpretation": "Metadata is descriptive and is NOT treated as ground truth. Mixed-label sources are surfaced for review only; no example is relabeled by this audit.",
+    "mixed_label_source_values": [
+      "neuralchemy_v1",
+      "original",
+      "wildguard_judgecomp"
+    ],
+    "label_counts_by_source": {
+      "original": {
+        "0": 4,
+        "1": 10
+      },
+      "wildguard_judgecomp": {
+        "0": 33,
+        "1": 13
+      },
+      "harmbench": {
+        "0": 0,
+        "1": 14
+      },
+      "harmbench_benign": {
+        "0": 18,
+        "1": 0
+      },
+      "hackaprompt": {
+        "0": 0,
+        "1": 291
+      },
+      "neuralchemy_v1": {
+        "0": 352,
+        "1": 206
+      }
+    },
+    "hypotheses_not_resolved": [
+      "High-confidence false positives may reflect label noise in the source (the label is wrong and the model is right).",
+      "The same pattern may reflect a genuine model bias toward over-flagging that source's benign style (the model is wrong).",
+      "These two hypotheses are not distinguishable from aggregate counts alone; resolving either would require human review of the affected rows and would still not be an automatic relabel."
+    ]
+  },
+  "signal_availability": {
+    "deployed_request_fields": [
+      "prompt"
+    ],
+    "inference_available_signals": [
+      "prompt"
+    ],
+    "offline_diagnostic_fields": {
+      "category": {
+        "available_at_inference": false,
+        "classification": "offline diagnostic only"
+      },
+      "source": {
+        "available_at_inference": false,
+        "classification": "offline diagnostic only"
+      },
+      "severity": {
+        "available_at_inference": false,
+        "classification": "offline diagnostic only"
+      },
+      "augmented": {
+        "available_at_inference": false,
+        "classification": "offline diagnostic only"
+      }
+    },
+    "text_available_at_inference": true,
+    "conclusion": "Source and category are offline dataset diagnostics. They are not present on the deployed inference request, so no source-based allowlist, blocklist, or routing rule can be enforced at inference time without changing the request contract and establishing a trustworthy client-supplied source value."
+  },
+  "gateway_policy_design": {
+    "deployed_decision_rule": {
+      "threshold": 0.9,
+      "modified": false,
+      "note": "This audit changes no decision rule and implements no allowlist. It only characterises what each gateway behaviour would do with the same measured outcomes."
+    },
+    "baseline_no_abstention": {
+      "policy_id": "no_abstention",
+      "coverage": 1.0,
+      "abstention_rate": 0.0,
+      "abstained_benign": 0,
+      "abstained_malicious": 0,
+      "fail_open": {
+        "false_positives": 42,
+        "false_negatives": 9,
+        "benign_blocked": 42,
+        "malicious_allowed": 9
+      },
+      "fail_closed": {
+        "false_positives": 42,
+        "false_negatives": 9,
+        "benign_blocked": 42,
+        "malicious_allowed": 9
+      },
+      "perfect_human_review": {
+        "false_positives": 42,
+        "false_negatives": 9,
+        "rows_sent_to_review": 0,
+        "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+      }
+    },
+    "behaviours": [
+      {
+        "policy_id": "no_abstention",
+        "coverage": 1.0,
+        "abstention_rate": 0.0,
+        "abstained_benign": 0,
+        "abstained_malicious": 0,
+        "fail_open": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "benign_blocked": 42,
+          "malicious_allowed": 9
+        },
+        "fail_closed": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "benign_blocked": 42,
+          "malicious_allowed": 9
+        },
+        "perfect_human_review": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "rows_sent_to_review": 0,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.90_m0.95",
+        "coverage": 0.9957492029755579,
+        "abstention_rate": 0.004250797024442083,
+        "abstained_benign": 2,
+        "abstained_malicious": 2,
+        "fail_open": {
+          "false_positives": 40,
+          "false_negatives": 11,
+          "benign_blocked": 40,
+          "malicious_allowed": 11
+        },
+        "fail_closed": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "benign_blocked": 42,
+          "malicious_allowed": 9
+        },
+        "perfect_human_review": {
+          "false_positives": 40,
+          "false_negatives": 9,
+          "rows_sent_to_review": 4,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.90_m0.99",
+        "coverage": 0.9808714133900106,
+        "abstention_rate": 0.019128586609989374,
+        "abstained_benign": 12,
+        "abstained_malicious": 6,
+        "fail_open": {
+          "false_positives": 30,
+          "false_negatives": 15,
+          "benign_blocked": 30,
+          "malicious_allowed": 15
+        },
+        "fail_closed": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "benign_blocked": 42,
+          "malicious_allowed": 9
+        },
+        "perfect_human_review": {
+          "false_positives": 30,
+          "false_negatives": 9,
+          "rows_sent_to_review": 18,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.80_m0.90",
+        "coverage": 0.9925611052072264,
+        "abstention_rate": 0.007438894792773645,
+        "abstained_benign": 5,
+        "abstained_malicious": 2,
+        "fail_open": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "benign_blocked": 42,
+          "malicious_allowed": 9
+        },
+        "fail_closed": {
+          "false_positives": 47,
+          "false_negatives": 7,
+          "benign_blocked": 47,
+          "malicious_allowed": 7
+        },
+        "perfect_human_review": {
+          "false_positives": 42,
+          "false_negatives": 7,
+          "rows_sent_to_review": 7,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.80_m0.95",
+        "coverage": 0.9883103081827843,
+        "abstention_rate": 0.011689691817215728,
+        "abstained_benign": 7,
+        "abstained_malicious": 4,
+        "fail_open": {
+          "false_positives": 40,
+          "false_negatives": 11,
+          "benign_blocked": 40,
+          "malicious_allowed": 11
+        },
+        "fail_closed": {
+          "false_positives": 47,
+          "false_negatives": 7,
+          "benign_blocked": 47,
+          "malicious_allowed": 7
+        },
+        "perfect_human_review": {
+          "false_positives": 40,
+          "false_negatives": 7,
+          "rows_sent_to_review": 11,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.80_m0.99",
+        "coverage": 0.973432518597237,
+        "abstention_rate": 0.026567481402763018,
+        "abstained_benign": 17,
+        "abstained_malicious": 8,
+        "fail_open": {
+          "false_positives": 30,
+          "false_negatives": 15,
+          "benign_blocked": 30,
+          "malicious_allowed": 15
+        },
+        "fail_closed": {
+          "false_positives": 47,
+          "false_negatives": 7,
+          "benign_blocked": 47,
+          "malicious_allowed": 7
+        },
+        "perfect_human_review": {
+          "false_positives": 30,
+          "false_negatives": 7,
+          "rows_sent_to_review": 25,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.70_m0.90",
+        "coverage": 0.9883103081827843,
+        "abstention_rate": 0.011689691817215728,
+        "abstained_benign": 7,
+        "abstained_malicious": 4,
+        "fail_open": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "benign_blocked": 42,
+          "malicious_allowed": 9
+        },
+        "fail_closed": {
+          "false_positives": 49,
+          "false_negatives": 5,
+          "benign_blocked": 49,
+          "malicious_allowed": 5
+        },
+        "perfect_human_review": {
+          "false_positives": 42,
+          "false_negatives": 5,
+          "rows_sent_to_review": 11,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.70_m0.95",
+        "coverage": 0.9840595111583422,
+        "abstention_rate": 0.015940488841657812,
+        "abstained_benign": 9,
+        "abstained_malicious": 6,
+        "fail_open": {
+          "false_positives": 40,
+          "false_negatives": 11,
+          "benign_blocked": 40,
+          "malicious_allowed": 11
+        },
+        "fail_closed": {
+          "false_positives": 49,
+          "false_negatives": 5,
+          "benign_blocked": 49,
+          "malicious_allowed": 5
+        },
+        "perfect_human_review": {
+          "false_positives": 40,
+          "false_negatives": 5,
+          "rows_sent_to_review": 15,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.70_m0.99",
+        "coverage": 0.9691817215727949,
+        "abstention_rate": 0.030818278427205102,
+        "abstained_benign": 19,
+        "abstained_malicious": 10,
+        "fail_open": {
+          "false_positives": 30,
+          "false_negatives": 15,
+          "benign_blocked": 30,
+          "malicious_allowed": 15
+        },
+        "fail_closed": {
+          "false_positives": 49,
+          "false_negatives": 5,
+          "benign_blocked": 49,
+          "malicious_allowed": 5
+        },
+        "perfect_human_review": {
+          "false_positives": 30,
+          "false_negatives": 5,
+          "rows_sent_to_review": 29,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.50_m0.90",
+        "coverage": 0.9840595111583422,
+        "abstention_rate": 0.015940488841657812,
+        "abstained_benign": 11,
+        "abstained_malicious": 4,
+        "fail_open": {
+          "false_positives": 42,
+          "false_negatives": 9,
+          "benign_blocked": 42,
+          "malicious_allowed": 9
+        },
+        "fail_closed": {
+          "false_positives": 53,
+          "false_negatives": 5,
+          "benign_blocked": 53,
+          "malicious_allowed": 5
+        },
+        "perfect_human_review": {
+          "false_positives": 42,
+          "false_negatives": 5,
+          "rows_sent_to_review": 15,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.50_m0.95",
+        "coverage": 0.9798087141339001,
+        "abstention_rate": 0.020191285866099893,
+        "abstained_benign": 13,
+        "abstained_malicious": 6,
+        "fail_open": {
+          "false_positives": 40,
+          "false_negatives": 11,
+          "benign_blocked": 40,
+          "malicious_allowed": 11
+        },
+        "fail_closed": {
+          "false_positives": 53,
+          "false_negatives": 5,
+          "benign_blocked": 53,
+          "malicious_allowed": 5
+        },
+        "perfect_human_review": {
+          "false_positives": 40,
+          "false_negatives": 5,
+          "rows_sent_to_review": 19,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      },
+      {
+        "policy_id": "b0.50_m0.99",
+        "coverage": 0.9649309245483528,
+        "abstention_rate": 0.03506907545164718,
+        "abstained_benign": 23,
+        "abstained_malicious": 10,
+        "fail_open": {
+          "false_positives": 30,
+          "false_negatives": 15,
+          "benign_blocked": 30,
+          "malicious_allowed": 15
+        },
+        "fail_closed": {
+          "false_positives": 53,
+          "false_negatives": 5,
+          "benign_blocked": 53,
+          "malicious_allowed": 5
+        },
+        "perfect_human_review": {
+          "false_positives": 30,
+          "false_negatives": 5,
+          "rows_sent_to_review": 33,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      }
+    ],
+    "illustrative_band": {
+      "selection_rule": "among non-baseline policies with coverage >= 0.95, the one catching the largest fraction of all errors, ties broken by smaller abstention rate; chosen for illustration on validation data only",
+      "optimality_claimed": false,
+      "policy_id": "b0.70_m0.99",
+      "behaviour": {
+        "policy_id": "b0.70_m0.99",
+        "coverage": 0.9691817215727949,
+        "abstention_rate": 0.030818278427205102,
+        "abstained_benign": 19,
+        "abstained_malicious": 10,
+        "fail_open": {
+          "false_positives": 30,
+          "false_negatives": 15,
+          "benign_blocked": 30,
+          "malicious_allowed": 15
+        },
+        "fail_closed": {
+          "false_positives": 49,
+          "false_negatives": 5,
+          "benign_blocked": 49,
+          "malicious_allowed": 5
+        },
+        "perfect_human_review": {
+          "false_positives": 30,
+          "false_negatives": 5,
+          "rows_sent_to_review": 29,
+          "note": "Optimistic upper bound assuming every reviewed row is resolved correctly; real reviewers are fallible."
+        }
+      }
+    },
+    "interpretation": [
+      "Fail-open minimises false blocking of benign prompts but lets every abstained malicious prompt through, raising false negatives.",
+      "Fail-closed minimises missed malicious prompts but blocks every abstained benign prompt, raising false positives.",
+      "Human review sits between the two and costs review capacity; the review figures here assume a perfect reviewer and are an optimistic upper bound.",
+      "The choice between these behaviours is a product risk decision about relative cost, not something validation data can decide."
+    ]
+  },
+  "review_escalation_ceiling": {
+    "status": "offline diagnostic ceiling only; NOT implemented and NOT implementable with the current request contract",
+    "overall_false_positives": 42,
+    "overall_false_negatives": 9,
+    "scenarios": [
+      {
+        "source": "wildguard_judgecomp",
+        "rows_sent_to_review": 46,
+        "fraction_of_validation_set": 0.048884165781083955,
+        "false_positives_moved_to_review": 27,
+        "false_negatives_moved_to_review": 0,
+        "implementable_at_inference": false,
+        "why_not": "The deployed request carries only the prompt text; source is not present, so this escalation cannot be enforced today."
+      },
+      {
+        "source": "harmbench_benign",
+        "rows_sent_to_review": 18,
+        "fraction_of_validation_set": 0.019128586609989374,
+        "false_positives_moved_to_review": 7,
+        "false_negatives_moved_to_review": 0,
+        "implementable_at_inference": false,
+        "why_not": "The deployed request carries only the prompt text; source is not present, so this escalation cannot be enforced today."
+      },
+      {
+        "source": "original",
+        "rows_sent_to_review": 14,
+        "fraction_of_validation_set": 0.01487778958554729,
+        "false_positives_moved_to_review": 1,
+        "false_negatives_moved_to_review": 0,
+        "implementable_at_inference": false,
+        "why_not": "The deployed request carries only the prompt text; source is not present, so this escalation cannot be enforced today."
+      }
+    ]
+  },
+  "test_split_loaded": false,
+  "prompt_text_included": false,
+  "limitations": [
+    "Every figure reuses validation-only aggregates from earlier reports and does not establish held-out test performance.",
+    "Wilson intervals quantify sampling uncertainty within a group; they do not correct for selection or labeling bias in the source itself.",
+    "Metadata is descriptive and is never treated as ground truth; no example is relabeled by this audit.",
+    "The source-based review escalation is an offline ceiling only and is not implementable because source is absent from the deployed request.",
+    "Human-review figures assume a perfect reviewer and are an optimistic bound; real review is fallible and has a cost.",
+    "The deployed 0.90 threshold was not tuned or changed and no model was retrained."
+  ]
+}

@@ -1,0 +1,526 @@
+{
+  "experiment": "deberta_validation_confidence_calibration",
+  "timestamp_utc": "2026-10-18T14:07:19.564672+00:00",
+  "evaluation_status": "completed",
+  "validation_only": true,
+  "validation_path": "data/raw/validation.parquet",
+  "label_distribution": {
+    "0": 407,
+    "1": 534
+  },
+  "model_configuration": {
+    "model_id": "microsoft/deberta-v3-small",
+    "architecture": [
+      "DebertaV2ForSequenceClassification"
+    ],
+    "model_type": "deberta-v2",
+    "num_labels": 2,
+    "id2label": {
+      "0": "LABEL_0",
+      "1": "LABEL_1"
+    },
+    "label2id": {
+      "LABEL_0": 0,
+      "LABEL_1": 1
+    },
+    "label_mapping_expected_by_project": {
+      "0": "benign",
+      "1": "malicious"
+    },
+    "tokenizer_class": "DebertaV2TokenizerFast",
+    "tokenizer_declared_model_max_length": 1000000000000000019884624838656,
+    "effective_max_sequence_length": 128,
+    "threshold": 0.9
+  },
+  "checkpoint": {
+    "directory": "models/deberta-v3-small",
+    "files": [
+      {
+        "path": "added_tokens.json",
+        "sha256": "dc046d04c9b0ada7ae6f1dc89c465801799acdf0c9a6aab8c15a1b2d5ca4e91f"
+      },
+      {
+        "path": "config.json",
+        "sha256": "44e8fe36a9ea5659b039545691a0896e21ab5629f37b2c7f4480354433902f0d"
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "2cefb8e40ade17940899ef523c7dea2a1bd1813ba0373edda84481a32c783614"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "sha256": "9463f61e1b109a8eb4688b829260d7c6b1e6dff04c98ff7269bb89e2b92369b9"
+      },
+      {
+        "path": "spm.model",
+        "sha256": "c679fbf93643d19aab7ee10c0b99e460bdbc02fedf34b92b05af343b4af586fd"
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "37fe3823ad5737f0033c832905c8d4089ed4008da79682ab3fd85c8ce8e5b040"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": "e6c4c771911c211618a2d46488dc7e9e499f051773cd4ff4faeca6fe55fdf569"
+      }
+    ]
+  },
+  "runtime": {
+    "python": "3.13.16",
+    "torch": "2.6.0+cpu",
+    "transformers": "4.49.0",
+    "device": "cpu",
+    "batch_size": 8
+  },
+  "validation_rows": 941,
+  "score_definition": "Class-1 softmax output of the saved DeBERTa checkpoint under the deployed preprocessing. Treated as an uncalibrated score; this study characterizes reliability and does not establish or improve calibration.",
+  "reliability": {
+    "binning_scheme": "10 equal-width bins on [0, 1]; bin i covers [i/bin_count, (i+1)/bin_count) and the final bin is closed on the right; scores on interior boundaries go to the upper bin",
+    "bin_count": 10,
+    "bins": [
+      {
+        "index": 0,
+        "lower": 0.0,
+        "upper": 0.1,
+        "interval": "[0.00, 0.10)",
+        "count": 356,
+        "fraction": 0.3783209351753454,
+        "mean_score": 0.0005830369113243191,
+        "empirical_positive_rate": 0.011235955056179775,
+        "signed_gap": -0.010652918144855457,
+        "absolute_gap": 0.010652918144855457
+      },
+      {
+        "index": 1,
+        "lower": 0.1,
+        "upper": 0.2,
+        "interval": "[0.10, 0.20)",
+        "count": 1,
+        "fraction": 0.0010626992561105207,
+        "mean_score": 0.1669116904574043,
+        "empirical_positive_rate": 0.0,
+        "signed_gap": 0.1669116904574043,
+        "absolute_gap": 0.1669116904574043
+      },
+      {
+        "index": 2,
+        "lower": 0.2,
+        "upper": 0.3,
+        "interval": "[0.20, 0.30)",
+        "count": 1,
+        "fraction": 0.0010626992561105207,
+        "mean_score": 0.2104572278905748,
+        "empirical_positive_rate": 0.0,
+        "signed_gap": 0.2104572278905748,
+        "absolute_gap": 0.2104572278905748
+      },
+      {
+        "index": 3,
+        "lower": 0.3,
+        "upper": 0.4,
+        "interval": "[0.30, 0.40)",
+        "count": 0,
+        "fraction": 0.0,
+        "mean_score": null,
+        "empirical_positive_rate": null,
+        "signed_gap": null,
+        "absolute_gap": null
+      },
+      {
+        "index": 4,
+        "lower": 0.4,
+        "upper": 0.5,
+        "interval": "[0.40, 0.50)",
+        "count": 1,
+        "fraction": 0.0010626992561105207,
+        "mean_score": 0.47291093811683393,
+        "empirical_positive_rate": 1.0,
+        "signed_gap": -0.5270890618831661,
+        "absolute_gap": 0.5270890618831661
+      },
+      {
+        "index": 5,
+        "lower": 0.5,
+        "upper": 0.6,
+        "interval": "[0.50, 0.60)",
+        "count": 2,
+        "fraction": 0.0021253985122210413,
+        "mean_score": 0.5735893254191499,
+        "empirical_positive_rate": 0.0,
+        "signed_gap": 0.5735893254191499,
+        "absolute_gap": 0.5735893254191499
+      },
+      {
+        "index": 6,
+        "lower": 0.6,
+        "upper": 0.7,
+        "interval": "[0.60, 0.70)",
+        "count": 2,
+        "fraction": 0.0021253985122210413,
+        "mean_score": 0.6160421797309192,
+        "empirical_positive_rate": 0.0,
+        "signed_gap": 0.6160421797309192,
+        "absolute_gap": 0.6160421797309192
+      },
+      {
+        "index": 7,
+        "lower": 0.7,
+        "upper": 0.8,
+        "interval": "[0.70, 0.80)",
+        "count": 4,
+        "fraction": 0.004250797024442083,
+        "mean_score": 0.7282759153542073,
+        "empirical_positive_rate": 0.5,
+        "signed_gap": 0.22827591535420733,
+        "absolute_gap": 0.22827591535420733
+      },
+      {
+        "index": 8,
+        "lower": 0.8,
+        "upper": 0.9,
+        "interval": "[0.80, 0.90)",
+        "count": 7,
+        "fraction": 0.007438894792773645,
+        "mean_score": 0.8401715401080374,
+        "empirical_positive_rate": 0.2857142857142857,
+        "signed_gap": 0.5544572543937517,
+        "absolute_gap": 0.5544572543937517
+      },
+      {
+        "index": 9,
+        "lower": 0.9,
+        "upper": 1.0,
+        "interval": "[0.90, 1.00]",
+        "count": 567,
+        "fraction": 0.6025504782146652,
+        "mean_score": 0.9983391690896094,
+        "empirical_positive_rate": 0.9259259259259259,
+        "signed_gap": 0.07241324316368347,
+        "absolute_gap": 0.07241324316368347
+      }
+    ],
+    "expected_calibration_error": 0.05624736787043724,
+    "brier_score": 0.05502808211963818,
+    "ece_definition": "sum over non-empty bins of (bin count / total) * |mean score - empirical positive rate|",
+    "brier_definition": "mean over examples of (score - binary label)^2"
+  },
+  "score_distributions": {
+    "overall": {
+      "sample_count": 941,
+      "minimum": 0.0004999785431752227,
+      "maximum": 0.9996326405266405,
+      "mean": 0.6145480524157046,
+      "median": 0.9993899793122732
+    },
+    "by_true_label": {
+      "benign": {
+        "sample_count": 407,
+        "minimum": 0.0004999785431752227,
+        "maximum": 0.9996185741082809,
+        "mean": 0.12337567382426497,
+        "median": 0.0005238891541097797
+      },
+      "malicious": {
+        "sample_count": 534,
+        "minimum": 0.0005576518812120726,
+        "maximum": 0.9996326405266405,
+        "mean": 0.9889060263608657,
+        "median": 0.999599583594488
+      }
+    },
+    "by_confusion_group": {
+      "true_positive": {
+        "sample_count": 525,
+        "minimum": 0.9063234851252135,
+        "maximum": 0.9996326405266405,
+        "mean": 0.998980916841207,
+        "median": 0.9996009395643597
+      },
+      "true_negative": {
+        "sample_count": 365,
+        "minimum": 0.0004999785431752227,
+        "maximum": 0.8932769871745087,
+        "mean": 0.02361800469671506,
+        "median": 0.0005215454301095732
+      },
+      "false_positive": {
+        "sample_count": 42,
+        "minimum": 0.9248929054048124,
+        "maximum": 0.9996185741082809,
+        "mean": 0.9903173221946391,
+        "median": 0.9978811205304312
+      },
+      "false_negative": {
+        "sample_count": 9,
+        "minimum": 0.0005576518812120726,
+        "maximum": 0.8586655558411417,
+        "mean": 0.401204081674278,
+        "median": 0.47291093811683393
+      }
+    }
+  },
+  "selective_prediction": {
+    "decision_threshold": 0.9,
+    "decision_threshold_modified": false,
+    "policy_definition": "accept as benign when score < benign_accept_max; accept as malicious when score >= malicious_accept_min; abstain (send to human review) otherwise",
+    "grid_status": "fixed in source code before this run; not adapted to observed results",
+    "policies": [
+      {
+        "policy_id": "no_abstention",
+        "benign_accept_max": 0.9,
+        "malicious_accept_min": 0.9,
+        "accepted_true_positive": 525,
+        "accepted_true_negative": 365,
+        "accepted_false_positive": 42,
+        "accepted_false_negative": 9,
+        "accepted_count": 941,
+        "abstained_count": 0,
+        "abstained_benign": 0,
+        "abstained_malicious": 0,
+        "coverage": 1.0,
+        "abstention_rate": 0.0,
+        "accepted_case_error_rate": 0.05419766206163656,
+        "abstained_deployed_error_rate": null,
+        "total_errors_not_reviewed": 51,
+        "fraction_of_all_errors_caught": 0.0
+      },
+      {
+        "policy_id": "b0.90_m0.95",
+        "benign_accept_max": 0.9,
+        "malicious_accept_min": 0.95,
+        "accepted_true_positive": 523,
+        "accepted_true_negative": 365,
+        "accepted_false_positive": 40,
+        "accepted_false_negative": 9,
+        "accepted_count": 937,
+        "abstained_count": 4,
+        "abstained_benign": 2,
+        "abstained_malicious": 2,
+        "coverage": 0.9957492029755579,
+        "abstention_rate": 0.004250797024442083,
+        "accepted_case_error_rate": 0.052294557097118465,
+        "abstained_deployed_error_rate": 0.5,
+        "total_errors_not_reviewed": 49,
+        "fraction_of_all_errors_caught": 0.0392156862745098
+      },
+      {
+        "policy_id": "b0.90_m0.99",
+        "benign_accept_max": 0.9,
+        "malicious_accept_min": 0.99,
+        "accepted_true_positive": 519,
+        "accepted_true_negative": 365,
+        "accepted_false_positive": 30,
+        "accepted_false_negative": 9,
+        "accepted_count": 923,
+        "abstained_count": 18,
+        "abstained_benign": 12,
+        "abstained_malicious": 6,
+        "coverage": 0.9808714133900106,
+        "abstention_rate": 0.019128586609989374,
+        "accepted_case_error_rate": 0.04225352112676056,
+        "abstained_deployed_error_rate": 0.6666666666666666,
+        "total_errors_not_reviewed": 39,
+        "fraction_of_all_errors_caught": 0.23529411764705882
+      },
+      {
+        "policy_id": "b0.80_m0.90",
+        "benign_accept_max": 0.8,
+        "malicious_accept_min": 0.9,
+        "accepted_true_positive": 525,
+        "accepted_true_negative": 360,
+        "accepted_false_positive": 42,
+        "accepted_false_negative": 7,
+        "accepted_count": 934,
+        "abstained_count": 7,
+        "abstained_benign": 5,
+        "abstained_malicious": 2,
+        "coverage": 0.9925611052072264,
+        "abstention_rate": 0.007438894792773645,
+        "accepted_case_error_rate": 0.05246252676659529,
+        "abstained_deployed_error_rate": 0.2857142857142857,
+        "total_errors_not_reviewed": 49,
+        "fraction_of_all_errors_caught": 0.0392156862745098
+      },
+      {
+        "policy_id": "b0.80_m0.95",
+        "benign_accept_max": 0.8,
+        "malicious_accept_min": 0.95,
+        "accepted_true_positive": 523,
+        "accepted_true_negative": 360,
+        "accepted_false_positive": 40,
+        "accepted_false_negative": 7,
+        "accepted_count": 930,
+        "abstained_count": 11,
+        "abstained_benign": 7,
+        "abstained_malicious": 4,
+        "coverage": 0.9883103081827843,
+        "abstention_rate": 0.011689691817215728,
+        "accepted_case_error_rate": 0.05053763440860215,
+        "abstained_deployed_error_rate": 0.36363636363636365,
+        "total_errors_not_reviewed": 47,
+        "fraction_of_all_errors_caught": 0.0784313725490196
+      },
+      {
+        "policy_id": "b0.80_m0.99",
+        "benign_accept_max": 0.8,
+        "malicious_accept_min": 0.99,
+        "accepted_true_positive": 519,
+        "accepted_true_negative": 360,
+        "accepted_false_positive": 30,
+        "accepted_false_negative": 7,
+        "accepted_count": 916,
+        "abstained_count": 25,
+        "abstained_benign": 17,
+        "abstained_malicious": 8,
+        "coverage": 0.973432518597237,
+        "abstention_rate": 0.026567481402763018,
+        "accepted_case_error_rate": 0.04039301310043668,
+        "abstained_deployed_error_rate": 0.56,
+        "total_errors_not_reviewed": 37,
+        "fraction_of_all_errors_caught": 0.27450980392156865
+      },
+      {
+        "policy_id": "b0.70_m0.90",
+        "benign_accept_max": 0.7,
+        "malicious_accept_min": 0.9,
+        "accepted_true_positive": 525,
+        "accepted_true_negative": 358,
+        "accepted_false_positive": 42,
+        "accepted_false_negative": 5,
+        "accepted_count": 930,
+        "abstained_count": 11,
+        "abstained_benign": 7,
+        "abstained_malicious": 4,
+        "coverage": 0.9883103081827843,
+        "abstention_rate": 0.011689691817215728,
+        "accepted_case_error_rate": 0.05053763440860215,
+        "abstained_deployed_error_rate": 0.36363636363636365,
+        "total_errors_not_reviewed": 47,
+        "fraction_of_all_errors_caught": 0.0784313725490196
+      },
+      {
+        "policy_id": "b0.70_m0.95",
+        "benign_accept_max": 0.7,
+        "malicious_accept_min": 0.95,
+        "accepted_true_positive": 523,
+        "accepted_true_negative": 358,
+        "accepted_false_positive": 40,
+        "accepted_false_negative": 5,
+        "accepted_count": 926,
+        "abstained_count": 15,
+        "abstained_benign": 9,
+        "abstained_malicious": 6,
+        "coverage": 0.9840595111583422,
+        "abstention_rate": 0.015940488841657812,
+        "accepted_case_error_rate": 0.04859611231101512,
+        "abstained_deployed_error_rate": 0.4,
+        "total_errors_not_reviewed": 45,
+        "fraction_of_all_errors_caught": 0.11764705882352941
+      },
+      {
+        "policy_id": "b0.70_m0.99",
+        "benign_accept_max": 0.7,
+        "malicious_accept_min": 0.99,
+        "accepted_true_positive": 519,
+        "accepted_true_negative": 358,
+        "accepted_false_positive": 30,
+        "accepted_false_negative": 5,
+        "accepted_count": 912,
+        "abstained_count": 29,
+        "abstained_benign": 19,
+        "abstained_malicious": 10,
+        "coverage": 0.9691817215727949,
+        "abstention_rate": 0.030818278427205102,
+        "accepted_case_error_rate": 0.03837719298245614,
+        "abstained_deployed_error_rate": 0.5517241379310345,
+        "total_errors_not_reviewed": 35,
+        "fraction_of_all_errors_caught": 0.3137254901960784
+      },
+      {
+        "policy_id": "b0.50_m0.90",
+        "benign_accept_max": 0.5,
+        "malicious_accept_min": 0.9,
+        "accepted_true_positive": 525,
+        "accepted_true_negative": 354,
+        "accepted_false_positive": 42,
+        "accepted_false_negative": 5,
+        "accepted_count": 926,
+        "abstained_count": 15,
+        "abstained_benign": 11,
+        "abstained_malicious": 4,
+        "coverage": 0.9840595111583422,
+        "abstention_rate": 0.015940488841657812,
+        "accepted_case_error_rate": 0.05075593952483801,
+        "abstained_deployed_error_rate": 0.26666666666666666,
+        "total_errors_not_reviewed": 47,
+        "fraction_of_all_errors_caught": 0.0784313725490196
+      },
+      {
+        "policy_id": "b0.50_m0.95",
+        "benign_accept_max": 0.5,
+        "malicious_accept_min": 0.95,
+        "accepted_true_positive": 523,
+        "accepted_true_negative": 354,
+        "accepted_false_positive": 40,
+        "accepted_false_negative": 5,
+        "accepted_count": 922,
+        "abstained_count": 19,
+        "abstained_benign": 13,
+        "abstained_malicious": 6,
+        "coverage": 0.9798087141339001,
+        "abstention_rate": 0.020191285866099893,
+        "accepted_case_error_rate": 0.04880694143167028,
+        "abstained_deployed_error_rate": 0.3157894736842105,
+        "total_errors_not_reviewed": 45,
+        "fraction_of_all_errors_caught": 0.11764705882352941
+      },
+      {
+        "policy_id": "b0.50_m0.99",
+        "benign_accept_max": 0.5,
+        "malicious_accept_min": 0.99,
+        "accepted_true_positive": 519,
+        "accepted_true_negative": 354,
+        "accepted_false_positive": 30,
+        "accepted_false_negative": 5,
+        "accepted_count": 908,
+        "abstained_count": 33,
+        "abstained_benign": 23,
+        "abstained_malicious": 10,
+        "coverage": 0.9649309245483528,
+        "abstention_rate": 0.03506907545164718,
+        "accepted_case_error_rate": 0.03854625550660793,
+        "abstained_deployed_error_rate": 0.48484848484848486,
+        "total_errors_not_reviewed": 35,
+        "fraction_of_all_errors_caught": 0.3137254901960784
+      }
+    ],
+    "baseline_policy_id": "no_abstention",
+    "pareto_frontier_policy_ids": [
+      "no_abstention",
+      "b0.90_m0.95",
+      "b0.90_m0.99",
+      "b0.80_m0.95",
+      "b0.80_m0.99",
+      "b0.70_m0.90",
+      "b0.70_m0.95",
+      "b0.70_m0.99"
+    ],
+    "illustrative_reference_rule": "smallest abstention rate achieving at least a 50% relative reduction in accepted-case error rate versus the no-abstention baseline",
+    "illustrative_reference_policy_id": null,
+    "optimality_claimed": false,
+    "selection_notes": [
+      "No candidate is declared optimal; deployment choice requires review-capacity input and independent confirmation.",
+      "All candidates were scored on the same validation data used to describe them, so any selection is optimistically biased."
+    ]
+  },
+  "limitations": [
+    "This study uses validation data only and does not establish held-out test performance.",
+    "Class-1 softmax outputs are treated as scores; reliability summaries do not make them calibrated probabilities.",
+    "ECE depends on the binning scheme; equal-width binning leaves sparse high-score bins whose rates are unstable at this sample size.",
+    "Candidate policies are described on the same validation data used to score them, so any selection is optimistically biased.",
+    "Abstention moves cases to human review; review capacity and cost are not modeled here.",
+    "The deployed decision threshold was not tuned or changed; no model was retrained."
+  ],
+  "test_split_loaded": false,
+  "prompt_text_included": false
+}

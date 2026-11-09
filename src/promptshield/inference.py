@@ -166,3 +166,46 @@ class DebertaInference:
                         )
                     )
         return predictions
+
+    def predict_logits_batch(
+        self,
+        prompts: list[str],
+        batch_size: int = 8,
+        enforce_prompt_limit: bool = True,
+    ) -> list[list[float]]:
+        """Return raw two-class logits using the normal inference preprocessing."""
+        if batch_size < 1:
+            raise ValueError("batch_size must be at least 1")
+        if not self.loaded or self._model is None or self._tokenizer is None:
+            raise RuntimeError("model is not loaded")
+        for prompt in prompts:
+            if not isinstance(prompt, str) or not prompt.strip():
+                raise ValueError("each prompt must be a non-empty string")
+            if enforce_prompt_limit and len(prompt) > MAX_PROMPT_LENGTH:
+                raise ValueError(
+                    f"prompt must be at most {MAX_PROMPT_LENGTH} characters"
+                )
+
+        output: list[list[float]] = []
+        with self._inference_lock:
+            for start in range(0, len(prompts), batch_size):
+                batch = prompts[start : start + batch_size]
+                encoded = self._tokenizer(
+                    batch,
+                    padding="max_length",
+                    truncation=True,
+                    max_length=MAX_LENGTH,
+                    return_tensors="pt",
+                )
+                encoded = {
+                    key: value.to(self.device) for key, value in encoded.items()
+                }
+                with self._torch.inference_mode():
+                    logits = self._model(**encoded).logits
+                output.extend(
+                    [
+                        [float(value) for value in row]
+                        for row in logits.detach().cpu().tolist()
+                    ]
+                )
+        return output

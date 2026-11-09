@@ -1,0 +1,2413 @@
+{
+  "experiment": "deberta_validation_error_analysis",
+  "timestamp_utc": "2026-10-17T17:42:25.531877+00:00",
+  "evaluation_status": "completed",
+  "validation_only": true,
+  "validation_path": "data/raw/validation.parquet",
+  "validation_rows": 941,
+  "label_distribution": {
+    "0": 407,
+    "1": 534
+  },
+  "model_configuration": {
+    "model_id": "microsoft/deberta-v3-small",
+    "architecture": [
+      "DebertaV2ForSequenceClassification"
+    ],
+    "model_type": "deberta-v2",
+    "num_labels": 2,
+    "id2label": {
+      "0": "LABEL_0",
+      "1": "LABEL_1"
+    },
+    "label2id": {
+      "LABEL_0": 0,
+      "LABEL_1": 1
+    },
+    "label_mapping_expected_by_project": {
+      "0": "benign",
+      "1": "malicious"
+    },
+    "tokenizer_class": "DebertaV2TokenizerFast",
+    "tokenizer_declared_model_max_length": 1000000000000000019884624838656,
+    "effective_max_sequence_length": 128,
+    "threshold": 0.9
+  },
+  "checkpoint": {
+    "directory": "models/deberta-v3-small",
+    "files": [
+      {
+        "path": "added_tokens.json",
+        "sha256": "dc046d04c9b0ada7ae6f1dc89c465801799acdf0c9a6aab8c15a1b2d5ca4e91f"
+      },
+      {
+        "path": "config.json",
+        "sha256": "44e8fe36a9ea5659b039545691a0896e21ab5629f37b2c7f4480354433902f0d"
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "2cefb8e40ade17940899ef523c7dea2a1bd1813ba0373edda84481a32c783614"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "sha256": "9463f61e1b109a8eb4688b829260d7c6b1e6dff04c98ff7269bb89e2b92369b9"
+      },
+      {
+        "path": "spm.model",
+        "sha256": "c679fbf93643d19aab7ee10c0b99e460bdbc02fedf34b92b05af343b4af586fd"
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "37fe3823ad5737f0033c832905c8d4089ed4008da79682ab3fd85c8ce8e5b040"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": "e6c4c771911c211618a2d46488dc7e9e499f051773cd4ff4faeca6fe55fdf569"
+      }
+    ]
+  },
+  "metrics": {
+    "accuracy": 0.9458023379383634,
+    "per_class": {
+      "0": {
+        "precision": 0.9759358288770054,
+        "recall": 0.8968058968058968,
+        "f1": 0.9346991037131882,
+        "support": 407
+      },
+      "1": {
+        "precision": 0.9259259259259259,
+        "recall": 0.9831460674157303,
+        "f1": 0.9536784741144414,
+        "support": 534
+      }
+    },
+    "macro_f1": 0.9441887889138147,
+    "confusion_matrix": [
+      [
+        365,
+        42
+      ],
+      [
+        9,
+        525
+      ]
+    ],
+    "support": {
+      "0": 407,
+      "1": 534
+    },
+    "false_positive_rate_benign": 0.10319410319410319,
+    "false_negative_rate_malicious": 0.016853932584269662
+  },
+  "counts": {
+    "true_negative": 365,
+    "false_positive": 42,
+    "false_negative": 9,
+    "true_positive": 525,
+    "rates": {
+      "false_positive_rate": {
+        "numerator": 42,
+        "denominator": 407,
+        "value": 0.10319410319410319
+      },
+      "false_negative_rate": {
+        "numerator": 9,
+        "denominator": 534,
+        "value": 0.016853932584269662
+      }
+    }
+  },
+  "metadata_fields_available": [
+    "category",
+    "source",
+    "severity",
+    "augmented"
+  ],
+  "metadata_breakdown": {
+    "category": {
+      "adversarial": {
+        "sample_count": 85,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 85
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 85
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 85,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 85,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 85
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              85
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 85
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "agent_manipulation": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 3,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 3,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 3
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 3
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "benign": {
+        "sample_count": 396,
+        "actual_label_counts": {
+          "0": 396,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 361,
+          "1": 35
+        },
+        "counts": {
+          "true_negative": 361,
+          "false_positive": 35,
+          "false_negative": 0,
+          "true_positive": 0,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 35,
+              "denominator": 396,
+              "value": 0.08838383838383838
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.9116161616161617,
+          "per_class": {
+            "0": {
+              "precision": 1.0,
+              "recall": 0.9116161616161617,
+              "f1": 0.9537648612945839,
+              "support": 396
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "macro_f1": 0.47688243064729197,
+          "confusion_matrix": [
+            [
+              361,
+              35
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "support": {
+            "0": 396,
+            "1": 0
+          },
+          "false_positive_rate_benign": 0.08838383838383838,
+          "false_negative_rate_malicious": null
+        }
+      },
+      "code_execution": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 1,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 1,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 1
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "context_confusion": {
+        "sample_count": 4,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 4,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 4,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 4
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              4
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 4
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "control": {
+        "sample_count": 5,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 4
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1,
+          "true_positive": 4,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 1,
+              "denominator": 5,
+              "value": 0.2
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.8,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 0.8,
+              "f1": 0.8888888888888888,
+              "support": 5
+            }
+          },
+          "macro_f1": 0.4444444444444444,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              4
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 5
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.2
+        }
+      },
+      "direct_injection": {
+        "sample_count": 293,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 293
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 293
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 293,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 293,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 293
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              293
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 293
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "edge_case": {
+        "sample_count": 11,
+        "actual_label_counts": {
+          "0": 11,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 4,
+          "1": 7
+        },
+        "counts": {
+          "true_negative": 4,
+          "false_positive": 7,
+          "false_negative": 0,
+          "true_positive": 0,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 7,
+              "denominator": 11,
+              "value": 0.6363636363636364
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.36363636363636365,
+          "per_class": {
+            "0": {
+              "precision": 1.0,
+              "recall": 0.36363636363636365,
+              "f1": 0.5333333333333333,
+              "support": 11
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "macro_f1": 0.26666666666666666,
+          "confusion_matrix": [
+            [
+              4,
+              7
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "support": {
+            "0": 11,
+            "1": 0
+          },
+          "false_positive_rate_benign": 0.6363636363636364,
+          "false_negative_rate_malicious": null
+        }
+      },
+      "encoding": {
+        "sample_count": 40,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 40
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 40
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 40,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 40,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 40
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              40
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 40
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "encoding_obfuscation": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 3,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 3,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 3
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 3
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "instruction_override": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 2,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 2,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 2
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 2
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "jailbreak": {
+        "sample_count": 48,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 48
+        },
+        "predicted_label_counts": {
+          "0": 7,
+          "1": 41
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 7,
+          "true_positive": 41,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 7,
+              "denominator": 48,
+              "value": 0.14583333333333334
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.8541666666666666,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 0.8541666666666666,
+              "f1": 0.9213483146067416,
+              "support": 48
+            }
+          },
+          "macro_f1": 0.4606741573033708,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              7,
+              41
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 48
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.14583333333333334
+        }
+      },
+      "model_fingerprinting": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 2,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 2,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 2
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 2
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "multi_turn": {
+        "sample_count": 9,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 9
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 9
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 9,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 9,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 9
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              9
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 9
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "payload_injection": {
+        "sample_count": 4,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 4
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 4,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 4,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 4
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              4
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 4
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "persona_replacement": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 1,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 1,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 1
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "prompt_extraction": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 1
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1,
+          "true_positive": 1,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 1,
+              "denominator": 2,
+              "value": 0.5
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.5,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "support": 2
+            }
+          },
+          "macro_f1": 0.3333333333333333,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 2
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.5
+        }
+      },
+      "prompt_injection": {
+        "sample_count": 1,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 1
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 1,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 1,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 1
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 1
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "rag_poisoning": {
+        "sample_count": 6,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 6
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 6
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 6,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 6,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 6
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              6
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 6
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "response_manipulation": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 2,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 2,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 2
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 2
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "system_extraction": {
+        "sample_count": 3,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 3
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 3,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 3,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 3
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              3
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 3
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "system_manipulation": {
+        "sample_count": 2,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 2
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 2,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 2,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 2
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 2
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "token_smuggling": {
+        "sample_count": 5,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 5
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 5,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 5,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 5
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              5
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 5
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "training_extraction": {
+        "sample_count": 13,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 13
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 13
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 13,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 13,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 13
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              13
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 13
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      }
+    },
+    "source": {
+      "hackaprompt": {
+        "sample_count": 291,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 291
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 291
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 291,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 291,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 291
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              291
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 291
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "harmbench": {
+        "sample_count": 14,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 14
+        },
+        "predicted_label_counts": {
+          "0": 7,
+          "1": 7
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 7,
+          "true_positive": 7,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 7,
+              "denominator": 14,
+              "value": 0.5
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.5,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 0.5,
+              "f1": 0.6666666666666666,
+              "support": 14
+            }
+          },
+          "macro_f1": 0.3333333333333333,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              7,
+              7
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 14
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.5
+        }
+      },
+      "harmbench_benign": {
+        "sample_count": 18,
+        "actual_label_counts": {
+          "0": 18,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 11,
+          "1": 7
+        },
+        "counts": {
+          "true_negative": 11,
+          "false_positive": 7,
+          "false_negative": 0,
+          "true_positive": 0,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 7,
+              "denominator": 18,
+              "value": 0.3888888888888889
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.6111111111111112,
+          "per_class": {
+            "0": {
+              "precision": 1.0,
+              "recall": 0.6111111111111112,
+              "f1": 0.7586206896551724,
+              "support": 18
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "macro_f1": 0.3793103448275862,
+          "confusion_matrix": [
+            [
+              11,
+              7
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "support": {
+            "0": 18,
+            "1": 0
+          },
+          "false_positive_rate_benign": 0.3888888888888889,
+          "false_negative_rate_malicious": null
+        }
+      },
+      "neuralchemy_v1": {
+        "sample_count": 558,
+        "actual_label_counts": {
+          "0": 352,
+          "1": 206
+        },
+        "predicted_label_counts": {
+          "0": 347,
+          "1": 211
+        },
+        "counts": {
+          "true_negative": 345,
+          "false_positive": 7,
+          "false_negative": 2,
+          "true_positive": 204,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 7,
+              "denominator": 352,
+              "value": 0.019886363636363636
+            },
+            "false_negative_rate": {
+              "numerator": 2,
+              "denominator": 206,
+              "value": 0.009708737864077669
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.9838709677419355,
+          "per_class": {
+            "0": {
+              "precision": 0.9942363112391931,
+              "recall": 0.9801136363636364,
+              "f1": 0.9871244635193133,
+              "support": 352
+            },
+            "1": {
+              "precision": 0.966824644549763,
+              "recall": 0.9902912621359223,
+              "f1": 0.9784172661870504,
+              "support": 206
+            }
+          },
+          "macro_f1": 0.9827708648531819,
+          "confusion_matrix": [
+            [
+              345,
+              7
+            ],
+            [
+              2,
+              204
+            ]
+          ],
+          "support": {
+            "0": 352,
+            "1": 206
+          },
+          "false_positive_rate_benign": 0.019886363636363636,
+          "false_negative_rate_malicious": 0.009708737864077669
+        }
+      },
+      "original": {
+        "sample_count": 14,
+        "actual_label_counts": {
+          "0": 4,
+          "1": 10
+        },
+        "predicted_label_counts": {
+          "0": 3,
+          "1": 11
+        },
+        "counts": {
+          "true_negative": 3,
+          "false_positive": 1,
+          "false_negative": 0,
+          "true_positive": 10,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 1,
+              "denominator": 4,
+              "value": 0.25
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 10,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.9285714285714286,
+          "per_class": {
+            "0": {
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571,
+              "support": 4
+            },
+            "1": {
+              "precision": 0.9090909090909091,
+              "recall": 1.0,
+              "f1": 0.9523809523809523,
+              "support": 10
+            }
+          },
+          "macro_f1": 0.9047619047619047,
+          "confusion_matrix": [
+            [
+              3,
+              1
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          "support": {
+            "0": 4,
+            "1": 10
+          },
+          "false_positive_rate_benign": 0.25,
+          "false_negative_rate_malicious": 0.0
+        }
+      },
+      "wildguard_judgecomp": {
+        "sample_count": 46,
+        "actual_label_counts": {
+          "0": 33,
+          "1": 13
+        },
+        "predicted_label_counts": {
+          "0": 6,
+          "1": 40
+        },
+        "counts": {
+          "true_negative": 6,
+          "false_positive": 27,
+          "false_negative": 0,
+          "true_positive": 13,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 27,
+              "denominator": 33,
+              "value": 0.8181818181818182
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 13,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.41304347826086957,
+          "per_class": {
+            "0": {
+              "precision": 1.0,
+              "recall": 0.18181818181818182,
+              "f1": 0.3076923076923077,
+              "support": 33
+            },
+            "1": {
+              "precision": 0.325,
+              "recall": 1.0,
+              "f1": 0.49056603773584906,
+              "support": 13
+            }
+          },
+          "macro_f1": 0.3991291727140784,
+          "confusion_matrix": [
+            [
+              6,
+              27
+            ],
+            [
+              0,
+              13
+            ]
+          ],
+          "support": {
+            "0": 33,
+            "1": 13
+          },
+          "false_positive_rate_benign": 0.8181818181818182,
+          "false_negative_rate_malicious": 0.0
+        }
+      }
+    },
+    "severity": {
+      "": {
+        "sample_count": 407,
+        "actual_label_counts": {
+          "0": 407,
+          "1": 0
+        },
+        "predicted_label_counts": {
+          "0": 365,
+          "1": 42
+        },
+        "counts": {
+          "true_negative": 365,
+          "false_positive": 42,
+          "false_negative": 0,
+          "true_positive": 0,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 42,
+              "denominator": 407,
+              "value": 0.10319410319410319
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.8968058968058968,
+          "per_class": {
+            "0": {
+              "precision": 1.0,
+              "recall": 0.8968058968058968,
+              "f1": 0.9455958549222798,
+              "support": 407
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            }
+          },
+          "macro_f1": 0.4727979274611399,
+          "confusion_matrix": [
+            [
+              365,
+              42
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "support": {
+            "0": 407,
+            "1": 0
+          },
+          "false_positive_rate_benign": 0.10319410319410319,
+          "false_negative_rate_malicious": null
+        }
+      },
+      "critical": {
+        "sample_count": 21,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 21
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 20
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1,
+          "true_positive": 20,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 1,
+              "denominator": 21,
+              "value": 0.047619047619047616
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.9523809523809523,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 0.9523809523809523,
+              "f1": 0.975609756097561,
+              "support": 21
+            }
+          },
+          "macro_f1": 0.4878048780487805,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              20
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 21
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.047619047619047616
+        }
+      },
+      "high": {
+        "sample_count": 168,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 168
+        },
+        "predicted_label_counts": {
+          "0": 7,
+          "1": 161
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 7,
+          "true_positive": 161,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 7,
+              "denominator": 168,
+              "value": 0.041666666666666664
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.9583333333333334,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 0.9583333333333334,
+              "f1": 0.9787234042553191,
+              "support": 168
+            }
+          },
+          "macro_f1": 0.48936170212765956,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              7,
+              161
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 168
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.041666666666666664
+        }
+      },
+      "low": {
+        "sample_count": 6,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 6
+        },
+        "predicted_label_counts": {
+          "0": 1,
+          "1": 5
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 1,
+          "true_positive": 5,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 1,
+              "denominator": 6,
+              "value": 0.16666666666666666
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.8333333333333334,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 0.8333333333333334,
+              "f1": 0.9090909090909091,
+              "support": 6
+            }
+          },
+          "macro_f1": 0.45454545454545453,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              5
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 6
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.16666666666666666
+        }
+      },
+      "medium": {
+        "sample_count": 339,
+        "actual_label_counts": {
+          "0": 0,
+          "1": 339
+        },
+        "predicted_label_counts": {
+          "0": 0,
+          "1": 339
+        },
+        "counts": {
+          "true_negative": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "true_positive": 339,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 0,
+              "denominator": 0,
+              "value": null
+            },
+            "false_negative_rate": {
+              "numerator": 0,
+              "denominator": 339,
+              "value": 0.0
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 1.0,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "support": 339
+            }
+          },
+          "macro_f1": 1.0,
+          "confusion_matrix": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              339
+            ]
+          ],
+          "support": {
+            "0": 0,
+            "1": 339
+          },
+          "false_positive_rate_benign": null,
+          "false_negative_rate_malicious": 0.0
+        }
+      }
+    },
+    "augmented": {
+      "false": {
+        "sample_count": 941,
+        "actual_label_counts": {
+          "0": 407,
+          "1": 534
+        },
+        "predicted_label_counts": {
+          "0": 374,
+          "1": 567
+        },
+        "counts": {
+          "true_negative": 365,
+          "false_positive": 42,
+          "false_negative": 9,
+          "true_positive": 525,
+          "rates": {
+            "false_positive_rate": {
+              "numerator": 42,
+              "denominator": 407,
+              "value": 0.10319410319410319
+            },
+            "false_negative_rate": {
+              "numerator": 9,
+              "denominator": 534,
+              "value": 0.016853932584269662
+            }
+          }
+        },
+        "metrics": {
+          "accuracy": 0.9458023379383634,
+          "per_class": {
+            "0": {
+              "precision": 0.9759358288770054,
+              "recall": 0.8968058968058968,
+              "f1": 0.9346991037131882,
+              "support": 407
+            },
+            "1": {
+              "precision": 0.9259259259259259,
+              "recall": 0.9831460674157303,
+              "f1": 0.9536784741144414,
+              "support": 534
+            }
+          },
+          "macro_f1": 0.9441887889138147,
+          "confusion_matrix": [
+            [
+              365,
+              42
+            ],
+            [
+              9,
+              525
+            ]
+          ],
+          "support": {
+            "0": 407,
+            "1": 534
+          },
+          "false_positive_rate_benign": 0.10319410319410319,
+          "false_negative_rate_malicious": 0.016853932584269662
+        }
+      }
+    }
+  },
+  "test_split_loaded": false,
+  "prompt_text_included": false,
+  "limitations": [
+    "This analysis uses validation data only and does not estimate held-out test performance.",
+    "Metadata group rates can be unstable when sample_count is small.",
+    "The threshold was not tuned or selected from this analysis.",
+    "Checkpoint hashes identify the artifact captured during this run; they do not prove historical training provenance."
+  ]
+}

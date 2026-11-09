@@ -1,5 +1,6 @@
 ﻿# Raw dataset files are downloaded locally and must not be committed.
 data/raw/
+data/raw-eval/
 .hf-dataset-*.json
 .cache/huggingface/
 transformer-checkpoints/
@@ -47,3 +48,4 @@ reports/validation-error-analysis.json
 Thumbs.db
 reports/manual-validation-review.md
 reports/near-duplicate-review.md
+reports/manual-deberta-*-review.json

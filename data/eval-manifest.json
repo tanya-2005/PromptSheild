@@ -1,0 +1,35 @@
+{
+    "purpose":  "Benign-chat generalization evaluation inputs. Raw files are local-only (gitignored under data/raw-eval/) and are never redistributed; this manifest carries metadata only.",
+    "frozen_protocol":  "docs/benign-chat-eval-proposal.md (frozen 2026-10-19)",
+    "datasets":  {
+                     "dolly":  {
+                                   "name":  "databricks/databricks-dolly-15k",
+                                   "url":  "https://huggingface.co/datasets/databricks/databricks-dolly-15k",
+                                   "commit":  "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+                                   "license":  "cc-by-sa-3.0",
+                                   "license_source":  "official Hugging Face dataset card metadata, verified 2026-10-19",
+                                   "attribution":  "\"databricks-dolly-15k\" by Databricks, Inc., licensed under CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)",
+                                   "file":  "data/raw-eval/dolly/databricks-dolly-15k.jsonl",
+                                   "bytes":  13085339,
+                                   "sha256":  "2df9083338b4abd6bceb5635764dab5d833b393b55759dffb0959b6fcbf794ec",
+                                   "downloaded_on":  "2026-10-19"
+                               },
+                     "oasst1":  {
+                                    "name":  "OpenAssistant/oasst1",
+                                    "url":  "https://huggingface.co/datasets/OpenAssistant/oasst1",
+                                    "commit":  "fdf72ae0827c1cda404aff25b6603abec9e3399b",
+                                    "license":  "apache-2.0",
+                                    "license_source":  "official Hugging Face dataset card metadata, verified 2026-10-19",
+                                    "attribution":  "OpenAssistant Conversations (oasst1), Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0)",
+                                    "file":  "data/raw-eval/oasst1/train.parquet",
+                                    "bytes":  39516251,
+                                    "sha256":  "bbfadf5ed1278ba2208c837fdcad865adf65f5df55d80abadab2745db13fcb5e",
+                                    "downloaded_on":  "2026-10-19"
+                                }
+                 },
+    "notes":  [
+                  "Raw prompt text stays under data/raw-eval/ (gitignored) and is never written to reports or console output.",
+                  "The held-out test split (data/raw/test.parquet) is not read by this evaluation.",
+                  "Evaluation scoring uses the frozen checkpoint models/deberta-v3-small at threshold 0.90 with gateway policy band_v1."
+              ]
+}

@@ -1,0 +1,27 @@
+{
+  "experiment": "deberta_source_human_review_summary",
+  "local_only": false,
+  "contains_raw_prompt_text": false,
+  "source_filter": "wildguard_judgecomp",
+  "threshold": 0.9,
+  "total_rows": 27,
+  "decided_rows": 0,
+  "pending_rows": 27,
+  "invalid_decisions": [],
+  "missing_evidence_rows": [],
+  "decision_counts": {
+    "likely_mislabeled": 0,
+    "genuine_model_false_positive": 0,
+    "ambiguous_insufficient_context": 0,
+    "other": 0
+  },
+  "review_complete": false,
+  "completion_note": "Review is incomplete. No conclusion about label noise versus model error can be drawn until a human decides every row.",
+  "labels_or_predictions_changed": false,
+  "test_split_loaded": false,
+  "limitations": [
+    "This summary aggregates reviewer decisions only; it contains no prompt text and no reviewer evidence verbatim.",
+    "Decision counts are review opinions, not corrected labels. No example was relabeled and no model artifact was changed.",
+    "Review outcomes are validation-only and do not establish held-out test performance."
+  ]
+}

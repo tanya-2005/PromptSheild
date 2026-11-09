@@ -21,6 +21,25 @@ class FakeTensor:
         return self.value
 
 
+class FakeLogitsTensor:
+    """Two-class logits fake supporting the detach/cpu/tolist path."""
+
+    def __init__(self, rows):
+        self.rows = rows
+
+    def to(self, device):
+        return self
+
+    def detach(self):
+        return self
+
+    def cpu(self):
+        return self
+
+    def tolist(self):
+        return self.rows
+
+
 class FakeProbabilities:
     def __getitem__(self, index):
         if index == (0, 1):
@@ -213,6 +232,81 @@ class InferenceTests(unittest.TestCase):
         self.service._tokenizer = FakeTokenizer()
         self.service._model = FakeModel()
         self.assertEqual(self.service.predict_batch([], batch_size=2), [])
+
+    def test_logits_batch_returns_raw_rows_and_uses_mini_batches(self):
+        state = {"count": 0, "offset": 0}
+
+        class CountingTokenizer(FakeTokenizer):
+            def __call__(self, prompts, **kwargs):
+                state["count"] = len(prompts)
+                return super().__call__(prompts, **kwargs)
+
+        class LogitsModel:
+            def __call__(self, **kwargs):
+                rows = [
+                    [
+                        float(state["offset"] + index),
+                        float(state["offset"] + index) + 10.0,
+                    ]
+                    for index in range(state["count"])
+                ]
+                state["offset"] += state["count"]
+                return SimpleNamespace(logits=FakeLogitsTensor(rows))
+
+        self.service.loaded = True
+        self.service._torch = FakeTorch()
+        self.service._tokenizer = CountingTokenizer()
+        self.service._model = LogitsModel()
+        results = self.service.predict_logits_batch(
+            ["first", "second", "third"], batch_size=2
+        )
+        self.assertEqual(
+            results, [[0.0, 10.0], [1.0, 11.0], [2.0, 12.0]]
+        )
+        self.assertTrue(
+            all(isinstance(value, float) for row in results for value in row)
+        )
+        self.assertEqual(
+            [len(call[0]) for call in self.service._tokenizer.calls],
+            [2, 1],
+        )
+        self.assertEqual(
+            self.service._tokenizer.calls[0][1],
+            {
+                "padding": "max_length",
+                "truncation": True,
+                "max_length": MAX_LENGTH,
+                "return_tensors": "pt",
+            },
+        )
+
+    def test_logits_batch_rejects_invalid_size_and_prompt(self):
+        self.service.loaded = True
+        self.service._torch = FakeTorch()
+        self.service._tokenizer = FakeTokenizer()
+        self.service._model = FakeModel()
+        with self.assertRaises(ValueError):
+            self.service.predict_logits_batch(["safe"], batch_size=0)
+        with self.assertRaises(ValueError):
+            self.service.predict_logits_batch([""], batch_size=2)
+        with self.assertRaises(ValueError):
+            self.service.predict_logits_batch(["x" * 4097], batch_size=1)
+        with self.assertRaises(ValueError):
+            self.service.predict_logits_batch(["safe", 7], batch_size=1)
+
+    def test_logits_batch_requires_loaded_model(self):
+        self.service._torch = FakeTorch()
+        self.service._tokenizer = FakeTokenizer()
+        self.service._model = FakeModel()
+        with self.assertRaises(RuntimeError):
+            self.service.predict_logits_batch(["safe"], batch_size=1)
+
+    def test_logits_batch_empty_returns_empty_list(self):
+        self.service.loaded = True
+        self.service._torch = FakeTorch()
+        self.service._tokenizer = FakeTokenizer()
+        self.service._model = FakeModel()
+        self.assertEqual(self.service.predict_logits_batch([], batch_size=2), [])
 
 
 if __name__ == "__main__":
