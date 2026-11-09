@@ -922,9 +922,9 @@ tests in `tests/test_hard_negative_experiment.py` (pool eligibility and
 deduplication, deterministic selection, metadata-only manifest, acceptance
 criteria, memory precondition, and path guards). The run stopped at its own
 pre-registered precondition — at least 3.5 GiB free RAM before any training
-data is assembled or any training starts — when only 2.75 GiB was
-available. No training subset was built, no training ran, and no candidate
-checkpoint exists. The frozen checkpoint, the `0.90` threshold, and the
+data is assembled or any training starts — when the latest preflight measured
+only 2.03 GiB available. No training subset was built, no training ran, and no
+candidate checkpoint exists. The frozen checkpoint, the `0.90` threshold, and the
 `band_v1` gateway policy are unchanged, and no mitigation effect is
 claimed: the 81.0% benign-chat block rate above still stands. The final
 audit is [reports/finalization-audit.md](reports/finalization-audit.md).
