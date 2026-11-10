@@ -14,16 +14,21 @@ from promptshield.gateway import (
     GatewayCounters,
     GatewayPolicy,
     evaluate,
+    evaluate_hybrid,
 )
 from promptshield.inference import (
     DEFAULT_THRESHOLD,
     MAX_PROMPT_LENGTH,
     DebertaInference,
+    HybridInference,
 )
 from promptshield.review_suggestions import matched_strong_marker_rules
 
 DEFAULT_MODEL_DIR = (
     Path(__file__).resolve().parents[2] / "models" / "deberta-v3-small"
+)
+DEFAULT_SVM_ARTIFACT = (
+    Path(__file__).resolve().parents[2] / "models" / "linear-svm.joblib"
 )
 
 
@@ -43,15 +48,29 @@ def create_app(
     threshold: float = DEFAULT_THRESHOLD,
     device: str = "auto",
     gateway_policy: GatewayPolicy | None = None,
+    gateway_mode: str = "deberta",
+    svm_artifact: Path = DEFAULT_SVM_ARTIFACT,
 ) -> FastAPI:
-    service = DebertaInference(model_dir, threshold=threshold, device=device)
+    if gateway_mode not in {"deberta", "hybrid"}:
+        raise ValueError("gateway_mode must be deberta or hybrid")
+    if gateway_mode == "hybrid":
+        gateway_service = HybridInference(
+            model_dir,
+            svm_artifact,
+            threshold=threshold,
+            device=device,
+        )
+        service = gateway_service.deberta
+    else:
+        service = DebertaInference(model_dir, threshold=threshold, device=device)
+        gateway_service = service
     policy = gateway_policy or GatewayPolicy()
     counters = GatewayCounters()
 
     @asynccontextmanager
     async def lifespan(_: FastAPI):
         try:
-            service.load()
+            gateway_service.load()
         except (
             FileNotFoundError,
             ImportError,
@@ -59,7 +78,7 @@ def create_app(
             OSError,
             ValueError,
         ) as error:
-            service.load_error = str(error)
+            gateway_service.load_error = str(error)
         yield
 
     app = FastAPI(
@@ -77,10 +96,11 @@ def create_app(
     @app.get("/health")
     def health() -> dict[str, Any]:
         return {
-            "loaded": service.loaded,
-            "device": service.device,
+            "loaded": gateway_service.loaded,
+            "device": gateway_service.device,
             "model_id": "microsoft/deberta-v3-small",
-            "load_error": service.load_error,
+            "load_error": gateway_service.load_error,
+            "gateway_mode": gateway_mode,
         }
 
     @app.post("/predict")
@@ -116,20 +136,30 @@ def create_app(
 
     @app.post("/gateway")
     def gateway(request: PromptRequest) -> dict[str, Any]:
-        if not service.loaded:
+        if not gateway_service.loaded:
             counters.record_unavailable()
             raise HTTPException(status_code=503, detail=UNAVAILABLE_DETAIL)
         try:
-            result = service.predict(request.prompt)
+            result = gateway_service.predict(request.prompt)
             marker_ids = matched_strong_marker_rules(request.prompt)
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
         except (RuntimeError, OSError) as error:
-            service.load_error = type(error).__name__
+            gateway_service.load_error = type(error).__name__
             counters.record_unavailable()
             raise HTTPException(
                 status_code=503, detail=UNAVAILABLE_DETAIL
             ) from error
+        if gateway_mode == "hybrid":
+            return evaluate_hybrid(
+                policy,
+                counters,
+                result.deberta.malicious_probability,
+                result.svm_decision,
+                marker_ids,
+                classifier_decision=result.deberta.decision,
+                classifier_threshold=result.deberta.threshold,
+            )
         return evaluate(
             policy,
             counters,

@@ -22,6 +22,14 @@ class Prediction:
     threshold: float
 
 
+@dataclass(frozen=True)
+class HybridPrediction:
+    """DeBERTa output paired with the existing Linear SVM decision."""
+
+    deberta: Prediction
+    svm_decision: str
+
+
 class DebertaInference:
     """Load and run the saved classifier without network access."""
 
@@ -209,3 +217,57 @@ class DebertaInference:
                     ]
                 )
         return output
+
+
+class HybridInference:
+    """Cached local wrapper for the experimental DeBERTa/SVM gateway mode."""
+
+    def __init__(
+        self,
+        model_dir: Path,
+        svm_artifact: Path,
+        threshold: float = DEFAULT_THRESHOLD,
+        device: str = "auto",
+    ) -> None:
+        self.deberta = DebertaInference(
+            model_dir, threshold=threshold, device=device
+        )
+        self.svm_artifact = Path(svm_artifact)
+        self.pipeline: Any = None
+        self.loaded = False
+        self.device = "unloaded"
+        self.load_error: str | None = None
+        self.threshold = threshold
+
+    def load(self) -> None:
+        """Load both existing artifacts once, without retraining."""
+        self.deberta.load()
+        if not self.svm_artifact.is_file():
+            raise FileNotFoundError(
+                f"SVM artifact not found: {self.svm_artifact}"
+            )
+        joblib = importlib.import_module("joblib")
+        artifact = joblib.load(self.svm_artifact)
+        if not isinstance(artifact, dict) or "pipeline" not in artifact:
+            raise ValueError("SVM artifact does not contain a pipeline")
+        pipeline = artifact["pipeline"]
+        if not callable(getattr(pipeline, "predict", None)):
+            raise ValueError("SVM artifact pipeline cannot predict")
+        self.pipeline = pipeline
+        self.loaded = True
+        self.device = self.deberta.device
+        self.load_error = None
+
+    def predict(self, prompt: str) -> HybridPrediction:
+        if not self.loaded or self.pipeline is None:
+            raise RuntimeError("hybrid model is not loaded")
+        deberta_result = self.deberta.predict(prompt)
+        try:
+            predictions = self.pipeline.predict([prompt])
+            svm_value = int(predictions[0])
+        except (IndexError, TypeError, ValueError, OSError) as error:
+            raise RuntimeError("SVM inference failed") from error
+        if len(predictions) != 1 or svm_value not in (0, 1):
+            raise RuntimeError("SVM model returned an invalid prediction")
+        svm_decision = "malicious" if svm_value == 1 else "benign"
+        return HybridPrediction(deberta_result, svm_decision)

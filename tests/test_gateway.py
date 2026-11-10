@@ -2,6 +2,7 @@ import asyncio
 import json
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from fastapi import HTTPException
@@ -16,6 +17,8 @@ from promptshield.gateway import (
     POLICY_ID,
     REASON_BELOW_ALLOW_MAX,
     REASON_BLOCK_BAND,
+    REASON_HYBRID_AGREEMENT,
+    REASON_HYBRID_DISAGREEMENT,
     REASON_REVIEW_BAND,
     REASON_STRONG_MARKER,
     REVIEW,
@@ -71,6 +74,23 @@ class UnloadedService(FakeService):
     def __init__(self, model_dir, threshold, device):
         super().__init__(model_dir, threshold, device)
         self.loaded = False
+
+
+class FakeHybridService:
+    def __init__(self, model_dir, svm_artifact, threshold, device):
+        self.deberta = FakeService(model_dir, threshold, device)
+        self.loaded = True
+        self.device = "cpu"
+        self.load_error = None
+
+    def load(self):
+        return None
+
+    def predict(self, prompt):
+        return SimpleNamespace(
+            deberta=Prediction(0.01, "benign", DEFAULT_THRESHOLD),
+            svm_decision="benign",
+        )
 
 
 def route_endpoint(app, path, method):
@@ -156,6 +176,44 @@ class GatewayPolicyTests(unittest.TestCase):
         first = policy.decide(0.42, ["jailbreak_lexicon"])
         second = policy.decide(0.42, ["jailbreak_lexicon"])
         self.assertEqual(first, second)
+
+    def test_hybrid_allows_when_both_models_predict_benign(self):
+        self.assertEqual(
+            GatewayPolicy().decide_hybrid(0.01, "benign"),
+            (ALLOW, [REASON_HYBRID_AGREEMENT]),
+        )
+
+    def test_hybrid_blocks_when_both_models_predict_malicious(self):
+        self.assertEqual(
+            GatewayPolicy().decide_hybrid(0.95, "malicious"),
+            (BLOCK, [REASON_HYBRID_AGREEMENT]),
+        )
+
+    def test_hybrid_reviews_when_models_disagree_in_both_directions(self):
+        policy = GatewayPolicy()
+        self.assertEqual(
+            policy.decide_hybrid(0.95, "benign"),
+            (REVIEW, [REASON_HYBRID_DISAGREEMENT]),
+        )
+        self.assertEqual(
+            policy.decide_hybrid(0.01, "malicious"),
+            (REVIEW, [REASON_HYBRID_DISAGREEMENT]),
+        )
+
+    def test_hybrid_preserves_deberta_review_band(self):
+        for svm_decision in ("benign", "malicious"):
+            self.assertEqual(
+                GatewayPolicy().decide_hybrid(0.80, svm_decision),
+                (REVIEW, [REASON_REVIEW_BAND]),
+            )
+
+    def test_hybrid_preserves_marker_escalation_for_benign_agreement(self):
+        self.assertEqual(
+            GatewayPolicy().decide_hybrid(
+                0.01, "benign", ["instruction_override"]
+            ),
+            (REVIEW, [REASON_STRONG_MARKER]),
+        )
 
     def test_describe_and_counters_contain_no_text_and_validate_inputs(self):
         described = GatewayPolicy().describe()
@@ -378,6 +436,60 @@ class GatewayApiTests(unittest.TestCase):
             call_gateway(app, BENIGN_PROMPT)
         self.assertEqual(context.exception.status_code, 503)
         self.assertEqual(context.exception.detail, UNAVAILABLE_DETAIL)
+
+    def test_invalid_gateway_mode_is_rejected(self):
+        with self.assertRaises(ValueError):
+            create_app(Path("models/deberta-v3-small"), gateway_mode="unknown")
+
+    def test_hybrid_mode_is_explicit_and_uses_hybrid_response(self):
+        with patch("promptshield.api.HybridInference", FakeHybridService):
+            app = create_app(
+                Path("models/deberta-v3-small"),
+                gateway_mode="hybrid",
+            )
+        response = call_gateway(app, BENIGN_PROMPT)
+        self.assertEqual(response["gateway_decision"], ALLOW)
+        self.assertEqual(response["gateway_mode"], "hybrid_experimental_v1")
+        self.assertEqual(response["svm_decision"], "benign")
+
+    def test_hybrid_startup_failure_fails_closed(self):
+        class FailingHybrid(FakeHybridService):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.loaded = False
+
+            def load(self):
+                raise FileNotFoundError("synthetic missing SVM artifact")
+
+        with patch("promptshield.api.HybridInference", FailingHybrid):
+            app = create_app(
+                Path("models/deberta-v3-small"),
+                gateway_mode="hybrid",
+            )
+        async def run_lifespan():
+            async with app.router.lifespan_context(app):
+                pass
+        asyncio.run(run_lifespan())
+        with self.assertRaises(HTTPException) as context:
+            call_gateway(app, BENIGN_PROMPT)
+        self.assertEqual(context.exception.status_code, 503)
+
+    def test_hybrid_runtime_failure_fails_closed(self):
+        class FailingHybrid(FakeHybridService):
+            def predict(self, prompt):
+                raise RuntimeError("synthetic hybrid inference failure")
+
+        with patch("promptshield.api.HybridInference", FailingHybrid):
+            app = create_app(
+                Path("models/deberta-v3-small"),
+                gateway_mode="hybrid",
+            )
+        with self.assertRaises(HTTPException) as context:
+            call_gateway(app, BENIGN_PROMPT)
+        self.assertEqual(context.exception.status_code, 503)
+        self.assertEqual(
+            app.state.gateway_counters.snapshot()["unavailable"], 1
+        )
 
 
 if __name__ == "__main__":

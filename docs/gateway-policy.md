@@ -1,5 +1,45 @@
 # PromptShield protective gateway policy (design note)
 
+## Experimental hybrid mode
+
+The API supports an explicitly selectable `gateway_mode="hybrid"` for local
+experimentation. It loads the existing DeBERTa checkpoint and
+`models/linear-svm.joblib` once at startup; it does not retrain or modify either
+artifact. DeBERTa's review band remains `review`. Outside that band, agreement
+blocks or allows and disagreement returns `review`; strong-marker precedence is
+unchanged. The default `gateway_mode="deberta"` remains the production path.
+
+This mode is experimental only. It has not been validated on the held-out test
+split and is not a production-readiness claim. The module-level API app uses
+DeBERTa by default; select the experiment programmatically with
+`create_app(gateway_mode="hybrid")`. No thresholds or model artifacts change.
+
+### Measured comparison
+
+The following results use the exact same frozen 200-example benign-chat set
+(100 Dolly and 100 OASST1) and the existing 941-row validation dataset. The
+200-example set was used during hybrid development and is therefore not an
+independent final evaluation.
+
+| Gateway | Benign allow | Benign review | Benign block | Benign block rate |
+|---|---:|---:|---:|---:|
+| DeBERTa | 30 | 8 | 162 | 81% |
+| Hybrid | 21 | 81 | 98 | 49% |
+
+| Validation metric | DeBERTa | Hybrid |
+|---|---:|---:|
+| Allow / review / block | 363 / 11 / 567 | 358 / 42 / 541 |
+| Accuracy | 94.58% | 95.86% |
+| Macro F1 | 94.42% | 95.77% |
+| Benign false-positive rate | 10.32% | 5.65% |
+| Malicious false-negative rate | 1.69% | 3.00% |
+
+The hybrid reduces hard blocks and validation false positives, but increases
+review volume and malicious false negatives. The existing malicious check had
+only four positive controls; both gateways blocked all four. That small control
+set cannot establish general malicious detection performance. The held-out
+test split and its labels were not accessed.
+
 Status: proposed policy, documented before implementation. This note fixes the
 gateway decision rule, its rationale, its failure behaviour, and its known
 costs before any gateway code is written. It changes no classifier behaviour:

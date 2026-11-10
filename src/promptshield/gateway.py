@@ -35,6 +35,7 @@ from dataclasses import dataclass
 from typing import Any, Sequence
 
 POLICY_ID = "band_v1"
+HYBRID_POLICY_ID = "hybrid_experimental_v1"
 
 ALLOW = "allow"
 REVIEW = "review"
@@ -50,6 +51,8 @@ REASON_BLOCK_BAND = "score_at_or_above_block_min"
 REASON_REVIEW_BAND = "score_in_review_band"
 REASON_STRONG_MARKER = "strong_injection_marker_matched"
 REASON_BELOW_ALLOW_MAX = "score_below_allow_max"
+REASON_HYBRID_AGREEMENT = "hybrid_models_agree"
+REASON_HYBRID_DISAGREEMENT = "hybrid_models_disagree"
 
 # Fixed 503 detail. Callers must treat this outcome as ``review``: a security
 # check that cannot run never silently allows a prompt.
@@ -113,6 +116,44 @@ class GatewayPolicy:
         if markers:
             return REVIEW, [REASON_STRONG_MARKER]
         return ALLOW, [REASON_BELOW_ALLOW_MAX]
+
+    def decide_hybrid(
+        self,
+        malicious_probability: float,
+        svm_decision: str,
+        strong_marker_ids: Sequence[str] = (),
+    ) -> tuple[str, list[str]]:
+        """Apply the experimental DeBERTa/SVM agreement policy.
+
+        DeBERTa's review band is evaluated first and remains review regardless
+        of the SVM result. Outside that band, agreement blocks or allows and
+        disagreement reviews. Strong markers retain their existing
+        allow-to-review precedence and never override block.
+        """
+        if not 0.0 <= malicious_probability <= 1.0:
+            raise ValueError("malicious_probability must be within [0, 1]")
+        if svm_decision not in {"benign", "malicious"}:
+            raise ValueError("svm_decision must be benign or malicious")
+        if self.allow_max <= malicious_probability < self.block_min:
+            return REVIEW, [REASON_REVIEW_BAND]
+
+        deberta_decision = (
+            "malicious"
+            if malicious_probability >= self.block_min
+            else "benign"
+        )
+        if deberta_decision == svm_decision:
+            if deberta_decision == "malicious":
+                return BLOCK, [REASON_HYBRID_AGREEMENT]
+            markers = sorted({
+                str(marker).strip()
+                for marker in strong_marker_ids
+                if str(marker).strip()
+            })
+            if markers:
+                return REVIEW, [REASON_STRONG_MARKER]
+            return ALLOW, [REASON_HYBRID_AGREEMENT]
+        return REVIEW, [REASON_HYBRID_DISAGREEMENT]
 
     def describe(self) -> dict[str, Any]:
         """Text-free policy description for API responses and stats."""
@@ -194,3 +235,44 @@ def evaluate(
         "policy": policy.describe(),
     }
     return payload
+
+
+def evaluate_hybrid(
+    policy: GatewayPolicy,
+    counters: GatewayCounters,
+    malicious_probability: float,
+    svm_decision: str,
+    strong_marker_ids: Sequence[str] = (),
+    classifier_decision: str = "",
+    classifier_threshold: float = 0.0,
+) -> dict[str, Any]:
+    """Apply the experimental hybrid policy and record its decision."""
+    decision, reasons = policy.decide_hybrid(
+        malicious_probability, svm_decision, strong_marker_ids
+    )
+    counters.record(decision)
+    return {
+        "gateway_decision": decision,
+        "reasons": reasons,
+        "malicious_probability": malicious_probability,
+        "classifier_decision": classifier_decision,
+        "classifier_threshold": classifier_threshold,
+        "classifier_threshold_status": (
+            "configurable experimental threshold selected from validation "
+            "experiments, not independent test results"
+        ),
+        "svm_decision": svm_decision,
+        "gateway_mode": HYBRID_POLICY_ID,
+        "marker_rule_ids": sorted({
+            str(m).strip() for m in strong_marker_ids if str(m).strip()
+        }),
+        "marker_engine_notice": MARKER_ENGINE_NOTICE,
+        "policy": {
+            **policy.describe(),
+            "policy_id": HYBRID_POLICY_ID,
+            "status": (
+                "experimental agreement policy; not production-ready and "
+                "not established on held-out test data"
+            ),
+        },
+    }
